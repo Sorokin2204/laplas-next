@@ -12,7 +12,7 @@ const UploadFile = ({ label }) => {
   };
   return (
     <>
-      <div className={'form-label'}>{label}</div>
+      <div className={'form-label mt-2'}>{label}</div>
       {!previewUrl && !uploadFile ? (
         <div className={styles.btnBox}>
           <label for="file">

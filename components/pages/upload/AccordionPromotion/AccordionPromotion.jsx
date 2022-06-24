@@ -8,7 +8,7 @@ const AccordionPromotion = () => {
   return (
     <>
       <Accordion title={'Продвижение'}>
-        <TextInput label={'SEO название'} />
+        <TextInput label={'SEO название'} white />
         <Textarea rows={7} label={'Ключевые слова для описания'} />
         <CopyClipBoard title="Таблица со списком ключевых запросов для рекламы" />
       </Accordion>

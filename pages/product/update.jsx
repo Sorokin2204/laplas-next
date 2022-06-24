@@ -79,7 +79,7 @@ function Update() {
               <tr>
                 <th>Код</th>
                 <th>Название</th>
-                <th>
+                <th style={{ textAlign: 'center' }}>
                   <button class=" btn-sm btn-icon btn-icon-only  btn btn-primary" style={{ width: '26px', display: 'flex', alignItems: 'center', justifyContent: 'center', padding: '4px', borderRadius: '50%', margin: '0 auto !important' }}>
                     <i
                       class=" lnr-plus-circle btn-icon-wrapper"
@@ -93,10 +93,10 @@ function Update() {
             <tbody>
               <tr>
                 <td>
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" style={{ fontSize: '16px' }} />
                 </td>
                 <td>
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" style={{ fontSize: '16px' }} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <button class=" btn-icon btn-icon-only btn btn-link  ">
@@ -107,11 +107,11 @@ function Update() {
               <tr>
                 <td>
                   {' '}
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" style={{ fontSize: '16px' }} />
                 </td>
                 <td>
                   {' '}
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" style={{ fontSize: '16px' }} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <button class=" btn-icon btn-icon-only btn btn-link  ">
@@ -122,11 +122,11 @@ function Update() {
               <tr>
                 <td>
                   {' '}
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" style={{ fontSize: '16px' }} />
                 </td>
                 <td>
                   {' '}
-                  <input type="text" class="form-control" />
+                  <input type="text" class="form-control" style={{ fontSize: '16px' }} />
                 </td>
                 <td style={{ textAlign: 'center' }}>
                   <button class=" btn-icon btn-icon-only btn btn-link  ">

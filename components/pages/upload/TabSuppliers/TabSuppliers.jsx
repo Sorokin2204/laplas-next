@@ -27,7 +27,7 @@ const TabSuppliers = () => {
           <tr>
             <th scope="row">1</th>
             <td>
-              <TextInput placeholder="Введите название" />
+              <input type="text" class="form-control" style={{ fontSize: '16px' }} placeholder="Введите название" />
             </td>
             <td>
               <Select placeholder="Выберите" />

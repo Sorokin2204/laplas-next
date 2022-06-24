@@ -7,7 +7,7 @@ const CardInfographic = ({ onDelete }) => {
   return (
     <div class="card mt-3">
       <div class="card-body">
-        <TextInput label={'Заголовок'} />
+        <TextInput label={'Заголовок'} white />
         <Textarea label={'Описание'} />
         <UploadFile label={'Файл'} />
         <button class="mb-2 mt-2 me-2 btn-icon btn btn-danger" style={{ width: '110px' }} onClick={onDelete}>

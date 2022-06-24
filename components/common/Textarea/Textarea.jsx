@@ -7,7 +7,7 @@ const Textarea = ({ label, rows, noSpace }) => {
         <label for="exampleText" class="form-label">
           {label}
         </label>
-        <textarea rows={rows} name="text" class="form-control"></textarea>
+        <textarea style={{ fontSize: '16px' }} rows={rows} name="text" class="form-control"></textarea>
       </div>
     </>
   );
