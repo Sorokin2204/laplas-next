@@ -46,13 +46,36 @@ const Menu = () => {
       link: '/brands',
       icon: 'metismenu-icon pe-7s-global',
     },
+    {
+      title: 'Настройки',
+      link: '/integratio ',
+      icon: 'metismenu-icon pe-7s-share',
+      children: [
+        {
+          title: 'Параметры интеграций',
+          link: '/',
+        },
+        {
+          title: 'Пользователи',
+          link: '/user',
+        },
+        {
+          title: 'Роли',
+          link: '/',
+        },
+        {
+          title: 'Поля отчета',
+          link: '/',
+        },
+      ],
+    },
   ];
 
   // const basePath = useBasePath();
   const router = useRouter();
   console.log(router);
   return (
-    <div class="app-sidebar sidebar-shadow">
+    <div class="app-sidebar sidebar-shadow" style={{ zIndex: '10' }}>
       <div class="app-header__logo">
         <div class="logo-src"></div>
         <div class="header__pane ms-auto">

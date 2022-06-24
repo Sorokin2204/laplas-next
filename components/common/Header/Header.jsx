@@ -6,7 +6,7 @@ const Header = () => {
   const [oneSelect, setOneSelect] = useState(false);
   const [avatarSelect, setAvatarSelect] = useState(false);
   return (
-    <div class="app-header header-shadow">
+    <div class="app-header header-shadow" style={{ zIndex: '10' }}>
       <div class="app-header__logo">
         <div class="logo-src" style={{ background: `url(/img/logo-inverse.png)` }}></div>
         <div class="header__pane ms-auto">

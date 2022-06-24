@@ -13,7 +13,9 @@ const MenuItem = ({ link, children, title, currentPath, icon }) => {
           <ul>
             {children.map((child) => (
               <li>
-                <a href={child.link}>{child.title}</a>
+                <a href={child.link} class={currentPath === child.link && 'mm-active'}>
+                  {child.title}
+                </a>
               </li>
             ))}
           </ul>

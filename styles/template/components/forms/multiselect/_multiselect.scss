@@ -38,11 +38,11 @@ $multiselect-tag-color-hover: $state-color-hover !default;
   position: relative;
   vertical-align: middle;
 
-  @import "single";
-  @import "multiple";
+  @import 'single';
+  @import 'multiple';
 }
 
-@import "dropdown";
+@import 'dropdown';
 
 .select2-close-mask {
   border: 0;
@@ -80,7 +80,7 @@ $multiselect-tag-color-hover: $state-color-hover !default;
 
 //@import "theme/default/layout";
 //@import "theme/classic/layout";
-@import "theme/bs-theme";
+// @import "theme/bs-theme";
 
 // Modifiers
 

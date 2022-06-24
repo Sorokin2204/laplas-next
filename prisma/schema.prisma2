@@ -1,0 +1,141 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model REG_ROLES {
+  U_ROLE__ID  String   @id @map("U_ROLE_,ID") @db.Uuid
+  S_ROLE_NAME String?  @db.VarChar
+  U_ROLE_CODE String?  @db.Uuid
+  C_ACTIVE    Boolean?
+}
+
+model SYS_DOMAINS {
+  U_DOMAIN_ID   String    @id @db.Uuid
+  S_DOMAIN_CODE String?   @db.VarChar
+  D_CREATED     DateTime? @db.Date
+  S_STATUS      String?   @db.VarChar
+  S_DB_USERNAME String?   @db.VarChar
+  C_ACTIVE      Boolean?
+  S_DB_PASSWORD String?   @db.VarChar
+}
+
+model SYS_DOMAIN_SERVICES {
+  U_DOMAIN_ID   String    @id @db.Uuid
+  SERVICES_LIST String?
+  D_BEGIN       DateTime? @db.Date
+  D_END         DateTime? @db.Date
+  C_ACTIVE      Boolean?
+}
+
+model SYS_SERVICES {
+  U_SERVICE_ID        String    @id(map: "services_pkey") @db.Uuid
+  S_SERVICE_NAME      String?   @db.VarChar
+  SERVICE_PARAMS_LIST String?   @db.VarChar
+  C_ACTIVE            Boolean?
+  D_BEGIN             DateTime? @db.Date
+  D_END               DateTime? @db.Date
+}
+
+model REG_LOCALES {
+  U_LOCALE_ID String @id  @db.Uuid
+  S_LOCALE_NAME    String?  @db.VarChar
+  S_LOCALE_CODE    String?  @db.VarChar
+  C_ACTIVE  Boolean?
+}
+model REG_LOCALE_TYPES {
+  U_LOCALE_TYPE_ID String @id  @db.Uuid
+  S_LOCALE_ENTITY_TYPE    String?  @db.VarChar
+  S_LOCALE_ENTITY_KEY    String?  @db.VarChar
+}
+model REG_LOCALE_VALUES {
+  U_LOCALE_VALUE_ID String @id  @db.Uuid
+  U_LOCALE_ID String? @db.Uuid
+  U_LOCALE_TYPE_ID String? @db.Uuid
+  S_LOCALE_VALUE    String?  @db.VarChar
+}
+model REG_CATEGORY_PARAM_TYPES {
+  U_PARAM_TYPE_ID String @id  @db.Uuid
+  S_PARAM_TYPE_NAME    String?  @db.VarChar
+  S_PARAM_TYPE_CODE    String?  @db.VarChar
+  C_ACTIVE  Boolean?
+}
+model USR_CATEGORIES {
+  U_CATEGORY_ID String @id  @db.Uuid
+  U_DOMAIN_ID String?  @db.Uuid
+  U_FIRM_ID String?  @db.Uuid
+  U_CATEGORY_PARENT_ID String?  @db.Uuid
+  S_CATEGORY_NAME    String?  @db.VarChar
+  C_ACTIVE  Boolean?
+  C_SHARED  Boolean?
+}
+model USR_CATEGORY_GROUPS {
+  U_CATEGORY_GROUP_ID String @id  @db.Uuid
+  U_DOMAIN_ID String?  @db.Uuid
+  U_CATEGORY_ID String?  @db.Uuid
+  S_CATEGORY_GROUP_NAME    String?  @db.VarChar
+  N_ORDER    Int  @db.Integer
+  C_ACTIVE  Boolean?
+}
+model USR_CATEGORY_PARAMS {
+  U_CATEGORY_PARAM_ID String @id  @db.Uuid
+  U_DOMAIN_ID String?  @db.Uuid
+  U_CATEGORY_GROUP_ID String?  @db.Uuid
+  U_PARAM_TYPE_ID String?  @db.Uuid
+  S_PARAM_NAME    String?  @db.VarChar
+  N_ORDER    Int  @db.Integer
+  C_ACTIVE  Boolean?
+}
+model USR_CATEGORY_PARAM_ITEMS {
+  U_CATEGORY_PARAM_ITEM_ID String @id  @db.Uuid
+  U_DOMAIN_ID String?  @db.Uuid
+  S_CATEGORY_PARAM_ITEM_NAME    String?  @db.VarChar
+  C_ACTIVE  Boolean?
+}
+
+
+model USR_FIRMS {
+  U_FIRM_ID String?  @db.Uuid
+  U_ID      String   @id @db.Uuid
+  S_NAME    String?  @db.VarChar
+  C_ACTIVE  Boolean?
+}
+
+model USR_USERS {
+  U_USER_ID       String   @id @db.Uuid
+  U_DOMAIN_ID     String?  @db.Uuid
+  U_DEFAULT_LOCALE_ID     String?  @db.Uuid
+  U_ROLE_ID     String?  @db.Uuid
+  S_LOGIN         String?  @db.VarChar
+  S_FIRSTNAME         String?  @db.VarChar
+  S_LASTNAME         String?  @db.VarChar
+  S_PASSWORD_HASH String?  @db.VarChar
+  S_EMAIL         String?  @db.VarChar
+  C_ACTIVE        Boolean?
+}
+
+model USR_USER_FIRMS {
+  U_USER_FIRM_ID String  @id @db.Uuid
+  U_DOMAIN_ID    String? @db.Uuid
+  U_USER_ID      String? @db.Uuid
+}
+
+model USR_USER_ROLES {
+  U_USER_ROLE_ID String   @id @db.Uuid
+  U_DOMAIN_ID    String?  @db.Uuid
+  U_ROLE_ID      String?  @db.Uuid
+  C_ACTIVE       Boolean?
+}
+
+model USR_USER_SESSIONS {
+  U_SESSION_ID String    @id @db.Uuid
+  U_DOMAIN_ID  String?   @db.Uuid
+  U_USER_ID    String?   @db.Uuid
+  D_BEGIN      DateTime? @db.Timestamptz(6)
+  D_END        DateTime? @db.Timestamptz(6)
+  S_IP         String?   @db.VarChar
+}

@@ -1,4 +1,5 @@
 import React from 'react';
+import ModalUser from '../../pages/user/ModalUser/ModalUser';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 const MainLayout = ({ children }) => {
@@ -24,6 +25,7 @@ const MainLayout = ({ children }) => {
         </div>
       </div>
       <div class="app-drawer-overlay d-none animated fadeIn"></div>
+      <ModalUser />
     </>
   );
 };
