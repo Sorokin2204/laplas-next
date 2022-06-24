@@ -3,24 +3,77 @@ import styles from './Select.module.scss';
 import ReactSelect from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti, noSpace, setValue, value }) => {
+  let close = '\\e870';
   const colourStyles = {
+    multiValue: (styles) => ({
+      ...styles,
+      margin: '4px',
+      background: '#E0ECFF !important',
+      borderRadius: '4px',
+      '& > div': {
+        fontSize: '16px !important',
+        fontWeight: '400  !important',
+        lineHeight: '16px  !important',
+        padding: '3px 8.5px 5px 8px',
+        color: '#212529',
+      },
+      '&:hover': {
+        background: '#E0ECFF  !important',
+      },
+      '& svg': { display: 'none' },
+      '& div[role]::before': {
+        content: '""',
+        display: 'block',
+        backgroundImage: `url(/close.svg)`,
+        backgroundRepeat: 'no-repeat',
+        backgroundSize: 'contain',
+        width: '8px',
+        height: '8px',
+      },
+      '& div[role]': {
+        padding: 0,
+        paddingRight: '12.5px',
+        '&:hover': {
+          background: '#E0ECFF !important',
+        },
+      },
+    }),
     control: (styles, isDisabled, isFocused, isSelected) => ({
       ...styles,
       backgroundColor: 'white',
-      height: '35px !important',
-      minHeight: '35px !important',
-      borderColor: isFocused ? '#a9bcee' : '#ced4da',
-      border: isFocused ? 'border: 1px solid #a9bcee !important' : 'border: 1px solid #ced4da !important',
+      // height: '38px !important',
+      // minHeight: '38px !important',
+
+      // borderColor: isFocused ? '#a9bcee' : '#ced4da',
+      border: '1px solid #E6E6E6 !important',
+      // border: isFocused ? 'border: 1px solid #a9bcee !important' : 'border: 1px solid #ced4da !important',
       boxShadow: isFocused ? '0 0 0 0.25rem rgb(63 106 216 / 25%)' : 'none',
+      fontSize: '16px !important',
+      ...(!isMulti && {
+        '&::after': {
+          content: '""',
+          display: 'block',
+          backgroundImage: `url(/arrow-down.svg)`,
+          backgroundRepeat: 'no-repeat',
+          backgroundSize: '12px 12px',
+          backgroundPosition: '50% 50%',
+          width: '13px',
+          height: '36px',
+          padding: '0 17.5px',
+
+          borderLeft: '1px solid #E6E6E6',
+        },
+      }),
     }),
 
-    placeholder: (styles) => ({ ...styles, fontSize: '0.88rem !important', fontWeight: '400  !important', lineHeight: '1.5  !important' }),
+    placeholder: (styles) => ({ ...styles, fontSize: '16px !important', fontWeight: '400  !important', lineHeight: '1.5  !important', marginLeft: '6px' }),
     input: (styles) => ({
       ...styles,
       padding: 0,
       border: 'none',
       margin: 0,
-      fontSize: '0.88rem !important',
+
+      fontSize: '16px !important',
       fontWeight: '400  !important',
       lineHeight: '1.5  !important',
       '& input': {
@@ -29,7 +82,7 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
         lineHeight: '1.5  !important',
       },
     }),
-    valueContainer: (styles) => ({ ...styles, padding: 0, border: 'none', margin: '0 0 0 12px' }),
+    valueContainer: (styles) => ({ ...styles, padding: 0, border: 'none', margin: '0', padding: '3.5px 6px' }),
     indicatorSeparator: (styles) => ({ ...styles, display: 'none' }),
     indicatorsContainer: (styles) => ({
       ...styles,
@@ -39,14 +92,14 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
         display: 'block',
       },
     }),
-    singleValue: (styles) => ({ ...styles, padding: 0, border: 'none', fontSize: '0.88rem', fontWeight: '400', lineHeight: '1.5' }),
+    singleValue: (styles) => ({ ...styles, padding: 0, border: 'none', fontSize: '16px', fontWeight: '400', lineHeight: '1.5' }),
     listBox: (styles) => ({ ...styles, padding: 0, border: 'none', fontSize: '0.88rem', fontWeight: '400', lineHeight: '1.5' }),
     container: (styles, isDisabled, isFocused, isSelected) => ({
       ...styles,
       padding: 0,
       margin: 0,
-      height: '35px !important',
-      minHeight: '35px !important',
+      // height: '35px !important',
+      // minHeight: '35px !important',
       borderColor: isFocused ? '#a9bcee' : '#ced4da',
       border: isFocused ? 'border: 1px solid #a9bcee !important' : 'border: 1px solid #ced4da !important',
       boxShadow: isFocused ? '0 0 0 0.25rem rgb(63 106 216 / 25%)' : 'none',
@@ -56,12 +109,15 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
       const color = 'black';
       return {
         ...styles,
+        '&:active': {
+          backgroundColor: isSelected ? '#E0ECFF' : '#fff',
+        },
         backgroundColor: isSelected ? '#E0ECFF' : '#fff',
         padding: 0,
         borderRadius: '4px',
         padding: '4px 8px',
         color: '#000',
-        fontSize: '14px',
+        fontSize: '16px',
         fontWeight: '400',
 
         marginTop: '4px',
@@ -76,12 +132,12 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
 
   return (
     <>
-      {label && <label class={`form-label ${!noSpace && 'mt-3'}`}>{label}</label>}
+      {label && <label class={`form-label ${!noSpace && 'mt-3'} ` + styles.label}>{label}</label>}
 
       {creatable ? (
-        <CreatableSelect noOptionsMessage={({ inputValue: string }) => 'Нет опций'} defaultValue={defaultValue} placeholder={placeholder ?? ''} isMulti options={options} />
+        <CreatableSelect styles={colourStyles} noOptionsMessage={({ inputValue: string }) => 'Нет опций'} defaultValue={defaultValue} placeholder={placeholder ?? ''} isMulti options={options} />
       ) : (
-        <ReactSelect value={value} styles={colourStyles} className="react-select-custom" onChange={(e) => setValue(e)} noOptionsMessage={({ inputValue: string }) => 'Нет опций'} defaultValue={defaultValue} isMulti={isMulti} options={options} placeholder={placeholder ?? ''} />
+        <ReactSelect value={value} styles={colourStyles} onChange={(e) => setValue?.(e)} noOptionsMessage={({ inputValue: string }) => 'Нет опций'} defaultValue={defaultValue} isMulti={isMulti} options={options} placeholder={placeholder ?? ''} />
       )}
     </>
   );

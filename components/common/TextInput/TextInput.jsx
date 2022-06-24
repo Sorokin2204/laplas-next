@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import WrapTextInputIcon from '../WrapTextInputIcon/WrapTextInputIcon';
 import styles from './TextInput.module.scss';
-const TextInput = ({ label, placeholder, name, noSpace, form, rules = {}, setValue, search, rightIcon }) => {
+const TextInput = ({ label, placeholder, name, noSpace, form, rules = {}, setValue, search, rightIcon, white }) => {
   const [text, setText] = useState();
 
   useEffect(() => {
@@ -24,9 +24,9 @@ const TextInput = ({ label, placeholder, name, noSpace, form, rules = {}, setVal
         </WrapTextInputIcon>
       ) : (
         <div class={`position-relative `}>
-          {label && <label class={`form-label ${!noSpace && 'mt-3'}`}>{label}</label>}
+          {label && <label class={`form-label ${!noSpace && 'mt-3'} ` + styles.label}>{label}</label>}
 
-          <input autoComplete="off" name={name} placeholder={placeholder} type="text" class="form-control" onChange={(e) => setText(e.target.value)} {...(typeof form == 'undefined' || form.register(name, rules))} />
+          <input autoComplete="off" name={name} placeholder={placeholder} type="text" class={'form-control ' + styles.input + ` ${white ? styles.inputWhite : ' '}`} onChange={(e) => setText(e.target.value)} {...(typeof form == 'undefined' || form.register(name, rules))} />
         </div>
       )}
     </>

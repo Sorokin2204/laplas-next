@@ -12,48 +12,48 @@ const Menu = () => {
     },
     {
       title: 'Интеграции',
-      link: '/integratio ',
+      link: '# ',
       icon: 'metismenu-icon pe-7s-share',
       children: [
         {
           title: 'Журнал',
-          link: '/',
+          link: '#',
         },
         {
           title: 'Ozon Эвилент Маркет',
-          link: '/product/update',
+          link: '#',
         },
         {
           title: 'Wildberries Эвилент Маркет',
-          link: '/',
+          link: '#',
         },
         {
           title: 'Я.Маркет FBS Эвилент Маркет',
-          link: '/',
+          link: '#',
         },
         {
           title: 'Ozon Эвилент',
-          link: '/',
+          link: '#',
         },
         {
           title: 'Wildberries Эвилент',
-          link: '/',
+          link: '#',
         },
       ],
     },
     {
       title: 'Фирмы',
-      link: '/brands',
+      link: '/company',
       icon: 'metismenu-icon pe-7s-global',
     },
     {
       title: 'Настройки',
-      link: '/integratio ',
+      link: '# ',
       icon: 'metismenu-icon pe-7s-share',
       children: [
         {
           title: 'Параметры интеграций',
-          link: '/',
+          link: '#',
         },
         {
           title: 'Пользователи',
@@ -61,17 +61,16 @@ const Menu = () => {
         },
         {
           title: 'Роли',
-          link: '/',
+          link: '/role',
         },
         {
           title: 'Поля отчета',
-          link: '/',
+          link: '#',
         },
       ],
     },
   ];
 
-  // const basePath = useBasePath();
   const router = useRouter();
   console.log(router);
   return (

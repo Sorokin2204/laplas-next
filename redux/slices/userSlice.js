@@ -21,10 +21,6 @@ export const userSlice = createSlice({
     setEditUser: (state, action) => {
       state.editUser = action.payload;
     },
-
-    setPage: (state, action) => {
-      state.getUsers.page = action.payload;
-    },
   },
   extraReducers: {
     ...reducerGetUsers,

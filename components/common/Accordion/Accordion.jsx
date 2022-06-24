@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import AnimateHeight from 'react-animate-height';
 import styles from './Accordion.module.scss';
-const Accordion = ({ title, children }) => {
+const Accordion = ({ title, children, link }) => {
   const [height, setHeight] = useState(0);
   return (
     <div class="card" style={{ boxShadow: 'none' }}>
@@ -17,6 +17,11 @@ const Accordion = ({ title, children }) => {
           }}>
           <h5 class="m-0 p-0">{title}</h5>
         </button>
+        {link && (
+          <a className={styles.link} href="#">
+            Редактировать
+          </a>
+        )}
       </div>
       <AnimateHeight
         duration={400}

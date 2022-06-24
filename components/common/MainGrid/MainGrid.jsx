@@ -7,7 +7,7 @@ import { useDispatch } from 'react-redux';
 import { deleteUsers } from '../../../redux/actions/user/deleteUsers';
 import Pagination from '../Pagination/Pagination';
 import WrapTextInputIcon from '../WrapTextInputIcon/WrapTextInputIcon';
-const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading, selectable, onAdd, onEdit, onDelete, head, setSearch, search, pages, currentPage, onPageClick }) => {
+const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading, selectable, onAdd, onEdit, onDelete, head, setSearch, search, pages, currentPage, onPageClick, onDeleteMany }) => {
   const onSelectRow = (checked, val) => {
     if (!checked) setSelectRows(selectRows.filter((sel) => sel[selectBy] !== val[selectBy]));
     if (checked) setSelectRows([...selectRows, val]);
@@ -18,7 +18,7 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
   };
 
   useEffect(() => {
-    if (data.length !== 0) {
+    if (data?.length !== 0) {
       setSelectRows(selectRows.filter((row) => data.find((item) => item[selectBy] === row[selectBy])));
     } else {
       setSelectRows([]);
@@ -35,15 +35,7 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
               <button class=" me-2 btn-icon btn btn-primary" onClick={() => onAdd()}>
                 <i class="lnr-plus-circle btn-icon-wrapper"></i>Добавить
               </button>
-              <button
-                type="button"
-                aria-haspopup="true"
-                aria-expanded="false"
-                data-bs-toggle="dropdown"
-                class=" me-2 btn btn-danger"
-                disabled={selectRows.length === 0}
-                style={{ position: 'relative' }}
-                onClick={() => dispatch(deleteUsers({ deleteIds: selectRows.map((selRow) => selRow[selectBy]) }))}>
+              <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class=" me-2 btn btn-danger" disabled={selectRows.length === 0} style={{ position: 'relative' }} onClick={() => onDeleteMany({ deleteIds: selectRows.map((selRow) => selRow[selectBy]) })}>
                 {` Удалить выбранные (${selectRows.length})`}
               </button>
             </div>
@@ -55,7 +47,7 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
                   <tr class="bg-light">
                     {selectable && (
                       <th style={{ textAlign: 'center', width: '50px' }}>
-                        <input name="check" checked={data?.length === selectRows?.length} type="checkbox" class="form-check-input" onChange={(e) => onSelectAllRows(e.target.checked)} />
+                        <input name="check" checked={data?.length === selectRows?.length} type="checkbox" class="form-check-input" onChange={(e) => onSelectAllRows(e.target.checked)} autoComplete="off" />
                       </th>
                     )}
                     {counted && (
@@ -102,7 +94,7 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
                       const selected = !!selectRows?.find((sel) => sel[selectBy] === row[selectBy]);
                       return (
                         <tr key={row[selectBy]} style={{ ...(selected && { backgroundColor: '#e0f3ff', '--bs-table-accent-bg': 'none' }) }}>
-                          {selectable && <td style={{ textAlign: 'center' }}>{<input name="check" type="checkbox" checked={selected} class="form-check-input" onChange={(e) => onSelectRow(e.target.checked, row)} />}</td>}
+                          {selectable && <td style={{ textAlign: 'center' }}>{<input name="check" type="checkbox" checked={selected} class="form-check-input" onChange={(e) => onSelectRow(e.target.checked, row)} autoComplete="off" />}</td>}
                           {counted && (
                             <th scrope="row" style={{ textAlign: 'center' }}>
                               {i + 1}

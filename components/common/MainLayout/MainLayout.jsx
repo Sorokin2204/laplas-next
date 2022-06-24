@@ -1,4 +1,6 @@
 import React from 'react';
+import ModalFirma from '../../pages/firm/ModalFirma/ModalFirma';
+import ModalRole from '../../pages/role/ModalRole/ModalRole';
 import ModalUser from '../../pages/user/ModalUser/ModalUser';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
@@ -11,7 +13,9 @@ const MainLayout = ({ children }) => {
         <div class="app-main">
           <Menu />
           <div class="app-main__outer">
-            <div class="app-main__inner">{children}</div>
+            <div class="app-main__inner" style={{ position: 'relative' }}>
+              {children}
+            </div>
           </div>
         </div>
       </div>
@@ -26,6 +30,8 @@ const MainLayout = ({ children }) => {
       </div>
       <div class="app-drawer-overlay d-none animated fadeIn"></div>
       <ModalUser />
+      <ModalFirma />
+      <ModalRole />
     </>
   );
 };

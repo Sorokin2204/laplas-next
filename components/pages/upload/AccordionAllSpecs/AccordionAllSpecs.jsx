@@ -69,7 +69,7 @@ const AccordionAllSpecs = () => {
 
   return (
     <>
-      <Accordion title="Все характеристики">
+      <Accordion title="Все характеристики" link>
         <Masonry breakpointCols={2} className="my-masonry-grid" columnClassName="my-masonry-grid_column">
           <CardSpec title={'Экран'} inputs={specDisplay} />
           <CardSpec title={'Основные'} inputs={commonDisplay} /> <CardSpec title={'Экран'} inputs={specDisplay} />

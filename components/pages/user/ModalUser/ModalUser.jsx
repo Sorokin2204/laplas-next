@@ -63,7 +63,7 @@ const ModalUser = () => {
       userForm.setValue('password', editUser?.S_PASSWORD_HASH);
       userForm.setValue(
         'role',
-        viewRoles.find((viewRole) => viewRole.label === editUser?.U_ROLE_ID),
+        viewRoles?.find((viewRole) => viewRole.label === editUser?.U_ROLE_ID),
       );
     } else {
       userForm.reset();
@@ -72,7 +72,7 @@ const ModalUser = () => {
   const [viewRoles, setViewRoles] = useState();
   useEffect(() => {
     if (roles) {
-      setViewRoles([...roles.map((role) => ({ value: role.U_ROLE__ID, label: role.S_ROLE_NAME }))]);
+      setViewRoles([...roles.map((role) => ({ value: role.U_ROLE__ID, label: role?.S_ROLE_NAME }))]);
     }
   }, [roles]);
 
@@ -82,7 +82,7 @@ const ModalUser = () => {
 
   const watchRole = userForm.watch('role');
   return (
-    <Modal title="Добавить пользователя" onClose={() => dispatch(setShowModalUser(false))} show={modalUser}>
+    <Modal title={!editUser ? 'Добавить пользователя' : `Редактировать пользователя "${editUser?.S_LOGIN}"`} onClose={() => dispatch(setShowModalUser(false))} show={modalUser}>
       <div class="modal-body">
         <TextInput name="login" form={userForm} label="Логин" noSpace rules={{ required: true }} />
         <TextInput name="fio" form={userForm} label="ФИО" rules={{ required: true }} />
@@ -96,7 +96,7 @@ const ModalUser = () => {
         </button>
 
         <button type="button" class="btn btn-primary" onClick={userForm.handleSubmit(onSubmit)}>
-          Добавить
+          {editUser ? 'Сохранить' : 'Добавить'}
         </button>
       </div>
       {(createLoading || updateLoading) && <Loading />}

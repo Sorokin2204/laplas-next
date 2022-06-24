@@ -12,6 +12,7 @@ import { getFirms } from '../../redux/actions/firm/getFirms';
 import { getRoles } from '../../redux/actions/role/getRoles';
 import { setEditUser, setPage } from '../../redux/slices/userSlice';
 import { deleteUser } from '../../redux/actions/user/deleteUser';
+import { deleteUsers } from '../../redux/actions/user/deleteUsers';
 function UserPage() {
   const [viewData, setViewData] = useState(null);
   const [viewRoles, setViewRoles] = useState(null);
@@ -51,22 +52,23 @@ function UserPage() {
 
   useEffect(() => {
     if (firms) {
-      setViewFirms(firms.map((firm) => ({ value: firm.U_FIRM_ID, label: firm.S_NAME })));
+      setViewFirms(firms.map((firm) => ({ value: firm.U_ID, label: firm.S_NAME })));
     }
-  }, [viewFirms]);
+  }, [firms]);
 
   useEffect(() => {
     if (roles && !viewRoles) {
-      setViewRoles([{ label: 'Роль', value: '' }, ...roles.map((role) => ({ value: role.U_ROLE__ID, label: role.S_ROLE_NAME }))]);
+      setViewRoles([{ label: 'Роль', value: '' }, ...roles.map((role) => ({ value: role.U_ROLE__ID, label: role?.S_ROLE_NAME }))]);
     }
     if (roles && usersData) {
       const view = usersData.map((user) => {
         const findRole = roles.find((role) => role.U_ROLE__ID === user.U_ROLE_ID);
-        return { ...user, U_ROLE_ID: findRole.S_ROLE_NAME };
+        return { ...user, U_ROLE_ID: findRole?.S_ROLE_NAME };
       });
       setViewData(view);
     }
   }, [roles, usersData]);
+
   useEffect(() => {
     if (viewRoles) {
       setHead({
@@ -83,7 +85,7 @@ function UserPage() {
           title: 'Имя',
         },
         U_ROLE_ID: {
-          width: '150px',
+          width: '170px',
           type: 'select',
           title: 'Роль',
           list: viewRoles,
@@ -92,7 +94,6 @@ function UserPage() {
     }
   }, [viewRoles]);
 
-  // const headers =
   useEffect(() => {
     if (searchTable) {
       dispath(getUsers({ ...searchTable, page: 1 }));
@@ -122,6 +123,7 @@ function UserPage() {
           dispath(setEditUser(val));
           dispath(setShowModalUser(true));
         }}
+        onDeleteMany={(ids) => dispath(deleteUsers(ids))}
         onDelete={(val) => dispath(deleteUser({ deleteId: val?.U_USER_ID }))}
         onPageClick={(page) => dispath(getUsers({ ...searchTable, page }))}
       />

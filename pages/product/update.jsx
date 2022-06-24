@@ -59,9 +59,10 @@ function Update() {
           <Select placeholder={'Выберите'} isMulti options={colourOptions} creatable label={'Теги'} />
           <div
             style={{
-              display: 'grid',
-              gridTemplateColumns: '1fr 1fr',
-              columnGap: '1rem',
+              display: 'inline-flex',
+              flexWrap: 'wrap',
+              // gridTemplateColumns: '1fr 1fr',
+              gridGap: '1rem',
             }}
             class="mt-3">
             {' '}

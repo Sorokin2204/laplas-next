@@ -2,11 +2,16 @@ import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
 export const initStateGetFirms = {
-  getFirms: { data: null, loading: false, error: null },
+  getFirms: { offset: 4, page: 1, pages: 0, data: null, loading: false, error: null },
 };
 
-export const getFirms = createAsyncThunk('user/getFirms', async () => {
-  return axios.get(`api/firms/`);
+export const getFirms = createAsyncThunk('user/getFirms', async (data = {}, { getState }) => {
+  const {
+    user: {
+      getUsers: { offset, page },
+    },
+  } = getState();
+  return axios.get(`api/firms/`, { params: { offset, page, ...data } });
 });
 
 export const reducerGetFirms = {
@@ -15,7 +20,10 @@ export const reducerGetFirms = {
   },
   [getFirms.fulfilled]: (state, { payload: { data } }) => {
     state.getFirms.loading = false;
-    state.getFirms.data = data;
+    console.log(data.users);
+    state.getFirms.data = data.users;
+    state.getFirms.pages = data.pages;
+    state.getFirms.page = parseInt(data.page);
   },
   [getFirms.rejected]: (state) => {
     state.getFirms.loading = false;

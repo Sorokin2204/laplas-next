@@ -1,21 +1,24 @@
+import Link from 'next/link';
 import React from 'react';
 import styles from './MenuItem.module.scss';
 const MenuItem = ({ link, children, title, currentPath, icon }) => {
   return (
     <>
       <li>
-        <a href={link} class={currentPath === link && 'mm-active'}>
-          {icon && <i class={icon}></i>}
+        <Link href={link}>
+          <a class={currentPath === link && 'mm-active'}>
+            {icon && <i class={icon}></i>}
 
-          {title}
-        </a>
+            {title}
+          </a>
+        </Link>
         {children && children?.length !== 0 && (
           <ul>
             {children.map((child) => (
               <li>
-                <a href={child.link} class={currentPath === child.link && 'mm-active'}>
-                  {child.title}
-                </a>
+                <Link href={child.link}>
+                  <a class={currentPath === child.link && 'mm-active'}>{child.title}</a>
+                </Link>
               </li>
             ))}
           </ul>
