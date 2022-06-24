@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { prismaClient } from '..';
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   if (req.method == 'GET') {
     const { page, offset, ...filter } = req.query;
     const skip = parseInt(page - 1) * parseInt(offset);
@@ -9,14 +9,14 @@ export default async function handle(req, res) {
       return { [key]: { contains: filter[key] } };
     });
     const users = await prismaClient.$transaction([
-      prismaClient.USR_FIRMS.findMany({
+      prismaClient.REG_ROLES.findMany({
         skip,
         take: parseInt(offset),
         where: {
           AND: searchWhere,
         },
       }),
-      prismaClient.USR_FIRMS.count({
+      prismaClient.REG_ROLES.count({
         where: {
           AND: searchWhere,
         },
@@ -25,15 +25,15 @@ export default async function handle(req, res) {
     const usersData = {
       page,
       pages: Math.ceil(parseInt(users[1]) / parseInt(offset)),
-      users: users[0],
+      roles: users[0],
     };
     res.json(usersData);
   } else if (req.method == 'POST') {
     const { deleteIds } = req.body;
     console.log(deleteIds);
-    const deleteUsers = await prismaClient.USR_FIRMS.deleteMany({
+    const deleteUsers = await prismaClient.REG_ROLES.deleteMany({
       where: {
-        U_ID: {
+        U_ROLE__ID: {
           in: deleteIds,
         },
       },
@@ -41,3 +41,4 @@ export default async function handle(req, res) {
     res.json(deleteUsers);
   }
 }
+export default handle;

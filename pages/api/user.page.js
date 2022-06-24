@@ -12,7 +12,7 @@ const userData = {
   C_ACTIVE: true,
 };
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   if (req.method === 'POST') {
     if (req.body?.deleteId) {
       const resault = await deleteUser(req.body?.deleteId);
@@ -66,3 +66,4 @@ const deleteUser = async (id) => {
   });
   return deleteUser;
 };
+export default handle;

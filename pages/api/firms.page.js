@@ -1,7 +1,7 @@
 import { PrismaClient } from '@prisma/client';
 import { prismaClient } from '..';
-import _ from 'lodash';
-export default async function handle(req, res) {
+
+async function handle(req, res) {
   if (req.method == 'GET') {
     const { page, offset, ...filter } = req.query;
     const skip = parseInt(page - 1) * parseInt(offset);
@@ -9,14 +9,14 @@ export default async function handle(req, res) {
       return { [key]: { contains: filter[key] } };
     });
     const users = await prismaClient.$transaction([
-      prismaClient.USR_USERS.findMany({
+      prismaClient.USR_FIRMS.findMany({
         skip,
         take: parseInt(offset),
         where: {
           AND: searchWhere,
         },
       }),
-      prismaClient.USR_USERS.count({
+      prismaClient.USR_FIRMS.count({
         where: {
           AND: searchWhere,
         },
@@ -31,9 +31,9 @@ export default async function handle(req, res) {
   } else if (req.method == 'POST') {
     const { deleteIds } = req.body;
     console.log(deleteIds);
-    const deleteUsers = await prismaClient.USR_USERS.deleteMany({
+    const deleteUsers = await prismaClient.USR_FIRMS.deleteMany({
       where: {
-        U_USER_ID: {
+        U_ID: {
           in: deleteIds,
         },
       },
@@ -41,3 +41,4 @@ export default async function handle(req, res) {
     res.json(deleteUsers);
   }
 }
+export default handle;

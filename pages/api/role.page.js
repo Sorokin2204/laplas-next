@@ -3,7 +3,7 @@ import { PrismaClient } from '@prisma/client';
 import { v4 as uuidv4 } from 'uuid';
 import { prismaClient } from '..';
 
-export default async function handle(req, res) {
+async function handle(req, res) {
   if (req.method === 'POST') {
     if (req.body?.deleteId) {
       const resault = await deleteRole(req.body?.deleteId);
@@ -49,3 +49,4 @@ const deleteRole = async (id) => {
   });
   return deleteRole;
 };
+export default handle;
