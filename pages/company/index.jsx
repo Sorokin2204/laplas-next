@@ -10,7 +10,7 @@ import { setEditFirm } from '../../redux/slices/firmSlice';
 import { deleteUser } from '../../redux/actions/user/deleteUser';
 import { deleteFirm } from '../../redux/actions/firm/deleteFirm';
 import { deleteFirms } from '../../redux/actions/firm/deleteFirms';
-function CompanyPage() {
+const CompanyPage = () => {
   const [searchTable, setSearchTable] = useState(null);
   const [head, setHead] = useState(null);
   const [selectRows, setSelectRows] = useState([]);
@@ -84,6 +84,6 @@ function CompanyPage() {
       />
     </>
   );
-}
+};
 
 export default CompanyPage;

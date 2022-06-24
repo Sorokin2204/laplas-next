@@ -10,7 +10,7 @@ import { setEditRole } from '../../redux/slices/roleSlice';
 import { deleteUser } from '../../redux/actions/user/deleteUser';
 import { deleteRole } from '../../redux/actions/role/deleteRole';
 import { deleteRoles } from '../../redux/actions/role/deleteRoles';
-function RolePage() {
+const RolePage = () => {
   const [searchTable, setSearchTable] = useState(null);
   const [head, setHead] = useState(null);
   const [selectRows, setSelectRows] = useState([]);
@@ -84,6 +84,6 @@ function RolePage() {
       />
     </>
   );
-}
+};
 
 export default RolePage;

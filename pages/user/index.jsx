@@ -13,7 +13,7 @@ import { getRoles } from '../../redux/actions/role/getRoles';
 import { setEditUser, setPage } from '../../redux/slices/userSlice';
 import { deleteUser } from '../../redux/actions/user/deleteUser';
 import { deleteUsers } from '../../redux/actions/user/deleteUsers';
-function UserPage() {
+const UserPage = () => {
   const [viewData, setViewData] = useState(null);
   const [viewRoles, setViewRoles] = useState(null);
   const [viewFirms, setViewFirms] = useState(null);
@@ -129,6 +129,6 @@ function UserPage() {
       />
     </>
   );
-}
+};
 
 export default UserPage;

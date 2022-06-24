@@ -11,7 +11,7 @@ import AccordionManufactures from '../../components/pages/upload/AccordionManufa
 import AccordionPhotoVideo from '../../components/pages/upload/AccordionPhotoVideo/AccordionPhotoVideo';
 import AccordionPromotion from '../../components/pages/upload/AccordionPromotion/AccordionPromotion';
 
-function Update() {
+const Update = () => {
   const colourOptions = [
     { value: 'ocean', label: 'Ocean', color: '#00B8D9', isFixed: true },
     { value: 'blue', label: 'Blue', color: '#0052CC', isDisabled: true },
@@ -148,5 +148,5 @@ function Update() {
       </div>
     </>
   );
-}
+};
 export default Update;
