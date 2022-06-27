@@ -6,7 +6,6 @@ export const initStateCreateUser = {
 };
 
 export const createUser = createAsyncThunk('user/createUser', async (data) => {
-  console.log(data);
   return axios.post(`api/user`, data);
 });
 

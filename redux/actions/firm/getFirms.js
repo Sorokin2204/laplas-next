@@ -18,12 +18,12 @@ export const reducerGetFirms = {
   [getFirms.pending]: (state) => {
     state.getFirms.loading = true;
   },
-  [getFirms.fulfilled]: (state, { payload: { data } }) => {
+  [getFirms.fulfilled]: (state, action) => {
     state.getFirms.loading = false;
-    console.log(data.users);
-    state.getFirms.data = data.users;
-    state.getFirms.pages = data.pages;
-    state.getFirms.page = parseInt(data.page);
+
+    state.getFirms.data = action.payload.data.users;
+    state.getFirms.pages = action.payload.data.pages;
+    state.getFirms.page = parseInt(action.payload.data.page);
   },
   [getFirms.rejected]: (state) => {
     state.getFirms.loading = false;

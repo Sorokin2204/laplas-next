@@ -59,17 +59,13 @@ const ModalRole = () => {
 
   const watchRole = roleForm.watch('role');
   return (
-    <Modal title={!editRole ? 'Добавить Роль' : `Редактировать роль "${editRole?.S_ROLE_NAME}"`} onClose={() => dispatch(setShowModalRole(false))} show={modalRole}>
-      <div class="modal-body mb-2">
+    <Modal title={!editRole ? 'Добавить Роль' : `Редактировать роль "${editRole?.S_ROLE_NAME}"`} onClose={() => dispatch(setShowModalRole(false))} show={modalRole} className={styles.modal}>
+      <div>
         <TextInput name="name" form={roleForm} label="Наименование" noSpace rules={{ required: true }} />
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={() => dispatch(setShowModalRole(false))}>
-          Закрыть
-        </button>
-
+      <div style={{ marginTop: '16px' }}>
         <button type="button" class="btn btn-primary" onClick={roleForm.handleSubmit(onSubmit)}>
-          {editRole ? 'Сохранить' : 'Добавить'}
+          {editRole ? 'Сохранить роль' : 'Добавить роль'}
         </button>
       </div>
       {(createLoading || updateLoading) && <Loading />}

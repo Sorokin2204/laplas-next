@@ -131,7 +131,7 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
   };
 
   return (
-    <>
+    <div>
       {label && <label class={`form-label ${!noSpace && 'mt-3'} ` + styles.label}>{label}</label>}
 
       {creatable ? (
@@ -139,7 +139,7 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
       ) : (
         <ReactSelect value={value} styles={colourStyles} onChange={(e) => setValue?.(e)} noOptionsMessage={({ inputValue: string }) => 'Нет опций'} defaultValue={defaultValue} isMulti={isMulti} options={options} placeholder={placeholder ?? ''} />
       )}
-    </>
+    </div>
   );
 };
 

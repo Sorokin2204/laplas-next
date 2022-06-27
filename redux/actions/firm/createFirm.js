@@ -6,7 +6,6 @@ export const initStateCreateFirm = {
 };
 
 export const createFirm = createAsyncThunk('firm/createFirm', async (data) => {
-  console.log(data);
   return axios.post(`api/firm`, data);
 });
 

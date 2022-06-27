@@ -28,7 +28,7 @@ const Menu = () => {
           link: '#',
         },
         {
-          title: 'Я.Маркет FBS Эвилент Маркет',
+          title: 'Я.Маркет FBS Эвилент',
           link: '#',
         },
         {
@@ -72,7 +72,7 @@ const Menu = () => {
   ];
 
   const router = useRouter();
-  console.log(router);
+  
   return (
     <div class="app-sidebar sidebar-shadow" style={{ zIndex: '10' }}>
       <div class="app-header__logo">
@@ -105,7 +105,7 @@ const Menu = () => {
           </button>
         </span>
       </div>
-      <div class="scrollbar-sidebar">
+      <div class="scrollbar-sidebar" style={{ overflow: 'scroll' }}>
         <div class="app-sidebar__inner">
           <ul class="vertical-nav-menu">
             <li class="app-sidebar__heading">Menu</li>

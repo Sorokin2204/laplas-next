@@ -59,17 +59,13 @@ const ModalFirma = () => {
 
   const watchRole = firmForm.watch('role');
   return (
-    <Modal title={!editFirm ? 'Добавить компанию' : `Редактировать компанию "${editFirm?.S_NAME}"`} onClose={() => dispatch(setShowModalFirm(false))} show={modalFirm}>
-      <div class="modal-body">
+    <Modal title={!editFirm ? 'Добавить компанию' : `Редактировать компанию "${editFirm?.S_NAME}"`} onClose={() => dispatch(setShowModalFirm(false))} show={modalFirm} className={styles.modal}>
+      <div>
         <TextInput name="name" form={firmForm} label="Наименование" noSpace rules={{ required: true }} />
       </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={() => dispatch(setShowModalFirm(false))}>
-          Закрыть
-        </button>
-
+      <div style={{ marginTop: '16px' }}>
         <button type="button" class="btn btn-primary" onClick={firmForm.handleSubmit(onSubmit)}>
-          {editFirm ? 'Сохранить' : 'Добавить'}
+          {editFirm ? 'Сохранить компанию' : 'Добавить компанию'}
         </button>
       </div>
       {(createLoading || updateLoading) && <Loading />}

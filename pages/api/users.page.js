@@ -25,12 +25,12 @@ async function handle(req, res) {
     const usersData = {
       page,
       pages: Math.ceil(parseInt(users[1]) / parseInt(offset)),
-      users: users[0],
+      users: users[0].map((user) => _.omit(user, ['S_PASSWORD_HASH'])),
     };
     res.json(usersData);
   } else if (req.method == 'POST') {
     const { deleteIds } = req.body;
-    console.log(deleteIds);
+
     const deleteUsers = await prismaClient.USR_USERS.deleteMany({
       where: {
         U_USER_ID: {

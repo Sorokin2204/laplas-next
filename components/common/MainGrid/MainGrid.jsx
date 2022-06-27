@@ -93,20 +93,26 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
                     data?.map((row, i) => {
                       const selected = !!selectRows?.find((sel) => sel[selectBy] === row[selectBy]);
                       return (
-                        <tr key={row[selectBy]} style={{ ...(selected && { backgroundColor: '#e0f3ff', '--bs-table-accent-bg': 'none' }) }}>
-                          {selectable && <td style={{ textAlign: 'center' }}>{<input name="check" type="checkbox" checked={selected} class="form-check-input" onChange={(e) => onSelectRow(e.target.checked, row)} autoComplete="off" />}</td>}
+                        <tr key={row[selectBy]} style={{ ...(selected && { backgroundColor: '#E0ECFF', '--bs-table-accent-bg': 'none' }) }} onClick={() => onEdit(row)}>
+                          {selectable && <td style={{ textAlign: 'center' }}>{<input name="check" type="checkbox" checked={selected} class="form-check-input" onChange={(e) => onSelectRow(e.target.checked, row)} onClick={(e) => e.stopPropagation()} autoComplete="off" />}</td>}
                           {counted && (
                             <th scrope="row" style={{ textAlign: 'center' }}>
                               {i + 1}
                             </th>
                           )}
-                          {head && Object.keys(head).map((key, index) => <td>{row[key]}</td>)}
+                          {head && Object.keys(head).map((key, index) => <td>{head[key]?.onTransform ? head[key]?.onTransform?.(row[key]) : row[key]}</td>)}
                           <td style={{ textAlign: 'center' }}>
                             <div style={{ display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                              <button style={{ padding: '6px' }} class=" btn-icon btn-icon-only btn btn-link  " onClick={() => onEdit(row)}>
+                              {/* <button style={{ padding: '6px' }} class=" btn-icon btn-icon-only btn btn-link  " onClick={() => onEdit(row)}>
                                 <i class="text-primary lnr-pencil btn-icon-wrapper "></i>
-                              </button>
-                              <button class=" btn-icon btn-icon-only btn btn-link" style={{ padding: '6px' }} onClick={() => onDelete(row)}>
+                              </button> */}
+                              <button
+                                class=" btn-icon btn-icon-only btn btn-link"
+                                style={{ padding: '6px' }}
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  onDelete(row);
+                                }}>
                                 <i class="text-danger lnr-trash btn-icon-wrapper "></i>
                               </button>
                             </div>

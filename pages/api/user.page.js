@@ -1,19 +1,20 @@
 import { PrismaClient } from '@prisma/client';
-
+import _ from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import { prismaClient } from '..';
-
+import bcrypt from 'bcrypt';
 const userData = {
-  U_DOMAIN_ID: '1',
-  U_DEFAULT_LOCALE_ID: '1',
   S_AVATAR: ' ',
   S_FIRM_MAIN: 'fdf',
-  S_LASTNAME: ' ',
-  C_ACTIVE: true,
+  U_DOMAIN_ID: '1',
 };
 
 async function handle(req, res) {
-  if (req.method === 'POST') {
+  if (req.method === 'GET') {
+    const { id } = req.query;
+    const resault = await getUser(id);
+    res.json(resault);
+  } else if (req.method === 'POST') {
     if (req.body?.deleteId) {
       const resault = await deleteUser(req.body?.deleteId);
       res.json(resault);
@@ -27,28 +28,57 @@ async function handle(req, res) {
   }
 }
 
-const createUser = async ({ login, password, fio, email, role }) => {
+const createUser = async ({ id, login, password, email, name, surname, locale, role, active, firms }) => {
+  const pass = await bcrypt.hash(password, 3);
   const data = {
-    U_USER_ID: uuidv4(),
-    S_LOGIN: login,
-    S_FIRSTNAME: fio,
-    S_PASSWORD_HASH: password,
+    C_ACTIVE: active,
     S_EMAIL: email,
+    S_FIRSTNAME: name,
+    S_LASTNAME: surname,
+    S_LOGIN: login,
+    S_PASSWORD_HASH: pass,
+    U_DEFAULT_LOCALE_ID: locale,
     U_ROLE_ID: role,
+    U_USER_ID: uuidv4(),
     ...userData,
   };
+
   const createUser = await prismaClient.USR_USERS.create({ data: data });
+
+  const newUserFirms = firms.map((firm) => ({
+    U_USER_FIRM_ID: uuidv4(),
+    U_DOMAIN_ID: firm,
+    U_USER_ID: createUser.U_USER_ID,
+  }));
+
+  await prismaClient.USR_USER_FIRMS.createMany({ data: newUserFirms });
+
   return createUser;
 };
 
-const updateUser = async ({ id, login, password, fio, email, role }) => {
+const updateUser = async ({ id, login, password, email, name, surname, locale, role, active, firms }) => {
+  const pass = await bcrypt.hash(password, 3);
   const data = {
-    S_LOGIN: login,
-    S_FIRSTNAME: fio,
-    S_PASSWORD_HASH: password,
+    C_ACTIVE: active,
     S_EMAIL: email,
+    S_FIRSTNAME: name,
+    S_LASTNAME: surname,
+    S_LOGIN: login,
+    S_PASSWORD_HASH: pass,
+    U_DEFAULT_LOCALE_ID: locale,
     U_ROLE_ID: role,
   };
+
+  await prismaClient.USR_USER_FIRMS.deleteMany({ where: { U_USER_ID: id } });
+
+  const newUserFirms = firms.map((firm) => ({
+    U_USER_FIRM_ID: uuidv4(),
+    U_DOMAIN_ID: firm,
+    U_USER_ID: id,
+  }));
+
+  await prismaClient.USR_USER_FIRMS.createMany({ data: newUserFirms });
+
   const updateUser = await prismaClient.USR_USERS.update({
     where: {
       U_USER_ID: id,
@@ -58,7 +88,6 @@ const updateUser = async ({ id, login, password, fio, email, role }) => {
   return updateUser;
 };
 const deleteUser = async (id) => {
-  console.log(id);
   const deleteUser = await prismaClient.USR_USERS.delete({
     where: {
       U_USER_ID: id,
@@ -66,4 +95,13 @@ const deleteUser = async (id) => {
   });
   return deleteUser;
 };
+
+const getUser = async (id) => {
+  const user = await prismaClient.USR_USERS.findUnique({ where: { U_USER_ID: id } });
+
+  let firms = await prismaClient.USR_USER_FIRMS.findMany({ where: { U_USER_ID: id }, select: { U_DOMAIN_ID: true } });
+  firms = firms.map((firm) => firm.U_DOMAIN_ID);
+  return { ..._.omit(user, ['S_PASSWORD_HASH']), firms };
+};
+
 export default handle;

@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { initStateCreateUser, reducerCreateUser } from '../actions/user/createUser';
 import { initStateDeleteUser, reducerDeleteUser } from '../actions/user/deleteUser';
 import { initStateDeleteUsers, reducerDeleteUsers } from '../actions/user/deleteUsers';
+import { initStateGetUser, reducerGetUser } from '../actions/user/getUser';
 import { initStateGetUsers, reducerGetUsers, reducerLocalGetUsers } from '../actions/user/getUsers';
 import { initStateUpdateUser, reducerUpdateUser } from '../actions/user/updateUser';
 
@@ -11,6 +12,7 @@ export const initialState = {
   ...initStateUpdateUser,
   ...initStateDeleteUser,
   ...initStateDeleteUsers,
+  ...initStateGetUser,
   editUser: null,
 };
 
@@ -28,6 +30,7 @@ export const userSlice = createSlice({
     ...reducerUpdateUser,
     ...reducerDeleteUser,
     ...reducerDeleteUsers,
+    ...reducerGetUser,
   },
 });
 export const { setEditUser, setPage } = userSlice.actions;

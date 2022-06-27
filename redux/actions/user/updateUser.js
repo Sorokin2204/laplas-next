@@ -6,7 +6,6 @@ export const initStateUpdateUser = {
 };
 
 export const updateUser = createAsyncThunk('user/updateUser', async (data) => {
-  console.log(data);
   return axios.patch(`api/user`, data);
 });
 

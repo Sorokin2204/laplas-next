@@ -13,7 +13,6 @@ const Accordion = ({ title, children, link }) => {
           onClick={() => {
             setHeight(height === 0 ? 'auto' : 0);
 
-            console.log('work');
           }}>
           <h5 class="m-0 p-0">{title}</h5>
         </button>

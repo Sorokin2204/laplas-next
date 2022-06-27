@@ -72,23 +72,34 @@ const UserPage = () => {
   useEffect(() => {
     if (viewRoles) {
       setHead({
-        S_LOGIN: {
-          type: 'input',
-          title: 'Логин',
-        },
-        S_EMAIL: {
-          type: 'input',
-          title: 'Почта',
-        },
         S_FIRSTNAME: {
           type: 'input',
           title: 'Имя',
+        },
+        S_LASTNAME: {
+          type: 'input',
+          title: 'Фамилия',
+        },
+        S_EMAIL: {
+          type: 'input',
+          title: 'Email',
         },
         U_ROLE_ID: {
           width: '170px',
           type: 'select',
           title: 'Роль',
           list: viewRoles,
+        },
+        C_ACTIVE: {
+          type: 'text',
+          title: 'Статус',
+          onTransform: (val) => {
+            if (val) {
+              return <div style={{ color: '#0D6EFD' }}>Активен</div>;
+            } else {
+              return <div style={{ color: '#DC3545' }}>Заблокирован</div>;
+            }
+          },
         },
       });
     }

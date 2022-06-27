@@ -18,11 +18,11 @@ export const reducerGetUsers = {
   [getUsers.pending]: (state) => {
     state.getUsers.loading = true;
   },
-  [getUsers.fulfilled]: (state, { payload: { data } }) => {
+  [getUsers.fulfilled]: (state, action) => {
     state.getUsers.loading = false;
-    state.getUsers.data = data.users;
-    state.getUsers.pages = data.pages;
-    state.getUsers.page = parseInt(data.page);
+    state.getUsers.data = action.payload.data.users;
+    state.getUsers.pages = action.payload.data.pages;
+    state.getUsers.page = parseInt(action.payload.data.page);
   },
   [getUsers.rejected]: (state, payload) => {
     state.getUsers.loading = false;

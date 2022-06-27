@@ -15,8 +15,8 @@
   margin-bottom: 15px;
 }
 .form-check-input {
-  width: 1.4em !important;
-  height: 1.4em !important;
+  width: 1.3em !important;
+  height: 1.3em !important;
 }
 
 .react-select-custom {
@@ -45,4 +45,8 @@
   font-size: 16px;
   font-weight: 500;
   color: #212529;
+}
+.form-control:disabled,
+.form-control[readonly] {
+  background-color: #f8f9fa;
 }

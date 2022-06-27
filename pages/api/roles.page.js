@@ -30,7 +30,7 @@ async function handle(req, res) {
     res.json(usersData);
   } else if (req.method == 'POST') {
     const { deleteIds } = req.body;
-    console.log(deleteIds);
+
     const deleteUsers = await prismaClient.REG_ROLES.deleteMany({
       where: {
         U_ROLE__ID: {

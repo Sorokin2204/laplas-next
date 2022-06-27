@@ -18,12 +18,12 @@ export const reducerGetRoles = {
   [getRoles.pending]: (state) => {
     state.getRoles.loading = true;
   },
-  [getRoles.fulfilled]: (state, { payload: { data } }) => {
+  [getRoles.fulfilled]: (state, action) => {
     state.getRoles.loading = false;
-    console.log(data.roles);
-    state.getRoles.data = data.roles;
-    state.getRoles.pages = data.pages;
-    state.getRoles.page = parseInt(data.page);
+
+    state.getRoles.data = action.payload.data.roles;
+    state.getRoles.pages = action.payload.data.pages;
+    state.getRoles.page = parseInt(action.payload.data.page);
   },
   [getRoles.rejected]: (state, action) => {
     state.getRoles.error = action.payload;

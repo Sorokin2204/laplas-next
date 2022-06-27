@@ -24,7 +24,7 @@ const CopyClipBoard = ({ title, link, disabled }) => {
             class="form-control"
             id="clipboard-source-2"
             disabled={!edit}
-            style={{ textDecoration: !edit ? 'underline' : 'auto', height: '100%', borderRadius: '0.25rem 0 0 0.25rem', cursor: !edit ? 'pointer' : 'auto' }}
+            style={{ textDecoration: !edit ? 'underline' : 'auto', height: '100%', borderRadius: '0.25rem 0 0 0.25rem', cursor: !edit ? 'pointer' : 'auto', color: !edit ? '#3f6ad8' : '#212529' }}
             autoComplete="off"
           />
         </div>

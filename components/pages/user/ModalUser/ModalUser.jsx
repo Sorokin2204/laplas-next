@@ -11,41 +11,73 @@ import { getUsers } from '../../../../redux/actions/user/getUsers';
 import { updateUser } from '../../../../redux/actions/user/updateUser';
 import { setEditUser } from '../../../../redux/slices/userSlice';
 import Select from '../../../common/Select/Select';
-
+import clsx from 'clsx';
+import RadioCard from '../../../common/RadioCard/RadioCard';
+import { getUser } from '../../../../redux/actions/user/getUser';
+import Radio from '../../../common/Radio/Radio';
+import { getFirms } from '../../../../redux/actions/firm/getFirms';
+import { getRoles } from '../../../../redux/actions/role/getRoles';
+import generator from 'generate-password';
+import { deleteUser } from '../../../../redux/actions/user/deleteUser';
 const ModalUser = () => {
-  const dispatch = useDispatch();
-  const { modalUser } = useSelector((state) => state.app);
-  const {
-    getRoles: { data: roles },
-  } = useSelector((state) => state.role);
-  const {
-    createUser: { data: createData, loading: createLoading },
-    updateUser: { data: updateData, loading: updateLoading },
-    editUser,
-  } = useSelector((state) => state.user);
   const defaultValues = {
     login: '',
-    fio: '',
+    name: '',
+    surname: '',
     email: '',
     password: '',
     role: '',
+    locale: '',
+    active: true,
+    firms: '',
   };
+  const dispatch = useDispatch();
+  const { modalUser } = useSelector((state) => state.app);
+  const {
+    getRoles: { data: roles, loading: rolesLoading },
+  } = useSelector((state) => state.role);
+  const {
+    getFirms: { data: firms, loading: firmsLoading },
+  } = useSelector((state) => state.firm);
+  const {
+    createUser: { data: createData, loading: createLoading },
+    getUser: { data: getUserData, loading: getUserLoading },
+    updateUser: { data: updateData, loading: updateLoading },
+    deleteUser: { data: deleteData, loading: deleteLoading },
+    editUser,
+  } = useSelector((state) => state.user);
   const userForm = useForm({ defaultValues });
+  const [viewRoles, setViewRoles] = useState();
+  const [viewFirms, setViewFirms] = useState();
+  const [viewLocale, setViewLocale] = useState([
+    { label: 'Русская', value: '1' },
+    { label: 'Англиская', value: '2' },
+  ]);
+  const [viewActive, setViewActive] = useState([
+    { label: 'Активен', value: true },
+    { label: 'Заблокирован', value: false },
+  ]);
+  const watchLocale = userForm.watch('locale');
+  const watchFirms = userForm.watch('firms');
+
   const onSubmit = (data) => {
-    if (editUser) {
-      dispatch(updateUser({ ...data, role: data.role.value, id: editUser.U_USER_ID }));
-    } else {
-      dispatch(createUser({ ...data, role: data.role.value }));
+    console.log(data);
+    if (data.role) {
+      if (editUser) {
+        dispatch(updateUser({ ...data, locale: data.locale.value, id: editUser.U_USER_ID, firms: data?.firms ? data?.firms?.map((firm) => firm.value) : [] }));
+      } else {
+        dispatch(createUser({ ...data, locale: data.locale.value, firms: data?.firms ? data?.firms?.map((firm) => firm.value) : [] }));
+      }
     }
   };
   useEffect(() => {
-    if (updateData && !updateLoading) {
+    if ((updateData && !updateLoading) || (deleteData && !deleteLoading)) {
       dispatch(setShowModalUser(false));
       dispatch(getUsers());
       dispatch(setEditUser(null));
       userForm.reset();
     }
-  }, [updateData, updateLoading]);
+  }, [updateData, updateLoading, deleteData, deleteLoading]);
 
   useEffect(() => {
     if (createData && !createLoading) {
@@ -56,52 +88,133 @@ const ModalUser = () => {
   }, [createData, createLoading]);
 
   useEffect(() => {
-    if (editUser) {
-      userForm.setValue('login', editUser?.S_LOGIN);
-      userForm.setValue('fio', editUser?.S_FIRSTNAME);
-      userForm.setValue('email', editUser?.S_EMAIL);
-      userForm.setValue('password', editUser?.S_PASSWORD_HASH);
+    if (getUserData && editUser) {
+      userForm.setValue('login', getUserData?.S_LOGIN);
+      userForm.setValue('name', getUserData?.S_FIRSTNAME);
+      userForm.setValue('surname', getUserData?.S_FIRSTNAME);
+      userForm.setValue('email', getUserData?.S_EMAIL);
+      userForm.setValue('active', getUserData?.C_ACTIVE);
+      userForm.setValue('password', '');
       userForm.setValue(
-        'role',
-        viewRoles?.find((viewRole) => viewRole.label === editUser?.U_ROLE_ID),
+        'locale',
+        viewLocale?.find((viewLocale) => viewLocale.value === getUserData?.U_DEFAULT_LOCALE_ID),
       );
+      userForm.setValue('role', viewRoles?.find((viewRole) => viewRole.value === getUserData?.U_ROLE_ID)?.value);
+      // userForm.setValue(
+      //   'firms',
+      //   viewFirms?.filter((viewFirm) => getUserData?.firms?.find((firm) => firm === viewFirm.value)),
+      // );
+    } else {
+      userForm.reset();
+    }
+  }, [getUserData]);
+  useEffect(() => {
+    if (editUser?.U_USER_ID) {
+      dispatch(getUser(editUser?.U_USER_ID));
     } else {
       userForm.reset();
     }
   }, [editUser]);
-  const [viewRoles, setViewRoles] = useState();
-  useEffect(() => {
-    if (roles) {
-      setViewRoles([...roles.map((role) => ({ value: role.U_ROLE__ID, label: role?.S_ROLE_NAME }))]);
-    }
-  }, [roles]);
 
   useEffect(() => {
-    userForm.register('role', { required: true });
+    dispatch(getFirms());
+    dispatch(getRoles());
   }, []);
 
-  const watchRole = userForm.watch('role');
-  return (
-    <Modal title={!editUser ? 'Добавить пользователя' : `Редактировать пользователя "${editUser?.S_LOGIN}"`} onClose={() => dispatch(setShowModalUser(false))} show={modalUser}>
-      <div class="modal-body">
-        <TextInput name="login" form={userForm} label="Логин" noSpace rules={{ required: true }} />
-        <TextInput name="fio" form={userForm} label="ФИО" rules={{ required: true }} />
-        <TextInput name="email" form={userForm} label="Почта" rules={{ required: true }} />
-        <Select setValue={(val) => userForm.setValue('role', val)} label="Роль" options={viewRoles} value={watchRole} />
-        <TextInput name="password" form={userForm} label="Пароль" rules={{ required: true }} />
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" onClick={() => dispatch(setShowModalUser(false))}>
-          Закрыть
-        </button>
+  useEffect(() => {
+    if (roles) {
+      setViewRoles([
+        ...roles.map((role) => ({
+          value: role.U_ROLE__ID,
+          label: role?.S_ROLE_NAME,
+          desc: `Неограниченный доступ ко всем документам, справочникам
+и настройкам системы`,
+        })),
+      ]);
+    }
+  }, [roles]);
+  useEffect(() => {
+    if (editUser && viewFirms?.length !== 0) {
+      userForm.setValue(
+        'firms',
+        viewFirms?.filter((viewFirm) => getUserData?.firms?.find((firm) => firm === viewFirm.value)),
+      );
+    }
+  }, [viewFirms, getUserData]);
 
-        <button type="button" class="btn btn-primary" onClick={userForm.handleSubmit(onSubmit)}>
-          {editUser ? 'Сохранить' : 'Добавить'}
-        </button>
+  useEffect(() => {
+    if (firms) {
+      setViewFirms([
+        ...firms.map((role) => ({
+          value: role.U_ID,
+          label: role?.S_NAME,
+        })),
+      ]);
+    }
+  }, [firms, modalUser]);
+  const onGeneratePassword = () => {
+    var password = generator.generate({
+      length: 12,
+      numbers: true,
+    });
+    userForm.setValue('password', password);
+  };
+  const onDeleteUser = () => {
+    dispatch(deleteUser({ deleteId: editUser?.U_USER_ID }));
+  };
+  useEffect(() => {
+    userForm.register('role', { required: true });
+    userForm.register('locale', { required: true });
+    userForm.register('firms', { required: false });
+  }, []);
+  return (
+    <Modal title={!editUser ? 'Добавить пользователя' : `Редактировать пользователя`} onClose={() => dispatch(setShowModalUser(false))} show={modalUser} className={styles.modal}>
+      <div style={{ minHeight: '380px' }}>
+        {((getUserData && !getUserLoading) || !editUser) && !rolesLoading && !firmsLoading ? (
+          <>
+            <div className={clsx(styles.modalBody)}>
+              {editUser && (
+                <div style={{ gridColumn: '1/3' }}>
+                  <Radio data={viewActive} name="active" form={userForm} label="Статус" noSpace />
+                </div>
+              )}
+
+              <TextInput name="name" form={userForm} label="Имя" rules={{ required: true }} noSpace />
+              <TextInput name="surname" form={userForm} label="Фамилия" rules={{ required: true }} noSpace />
+              <TextInput name="login" form={userForm} label="Логин" noSpace rules={{ required: true }} />
+              <TextInput name="password" form={userForm} label="Пароль" rules={{ required: true }} noSpace />
+              <TextInput name="email" form={userForm} label="Почта" rules={{ required: true }} noSpace />
+              <Select setValue={(val) => userForm.setValue('locale', val)} label="Локаль" options={viewLocale} value={watchLocale} noSpace />
+              <div style={{ gridColumn: '1/3' }}>
+                {' '}
+                <RadioCard className={styles.roleBody} data={viewRoles} name="role" form={userForm} label="Роль" noSpace />
+              </div>
+              <div style={{ gridColumn: '1/3' }}>
+                <Select setValue={(val) => userForm.setValue('firms', val)} label="Фирмы" options={viewFirms} value={watchFirms} noSpace isMulti />
+              </div>
+            </div>
+            <div className={clsx(styles.modalFooter)}>
+              <button type="button" class="me-2 btn btn-primary" onClick={userForm.handleSubmit(onSubmit)}>
+                {editUser ? 'Сохранить изменения' : 'Добавить пользователя'}
+              </button>
+              {editUser && (
+                <>
+                  <button type="button" class="me-2 btn btn-primary" onClick={onGeneratePassword}>
+                    Изменить пароль
+                  </button>
+                  <button class="me-2  btn-icon btn btn-danger" onClick={onDeleteUser}>
+                    <i class="lnr-trash btn-icon-wrapper"></i>Удалить
+                  </button>
+                </>
+              )}
+            </div>
+          </>
+        ) : (
+          <Loading />
+        )}
       </div>
-      {(createLoading || updateLoading) && <Loading />}
+      {(createLoading || updateLoading || deleteLoading) && <Loading />}
     </Modal>
   );
 };
-
 export default ModalUser;
