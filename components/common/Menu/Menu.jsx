@@ -42,6 +42,29 @@ const Menu = () => {
       ],
     },
     {
+      title: 'Справочники',
+      link: '# ',
+      icon: 'metismenu-icon pe-7s-share',
+      children: [
+        {
+          title: 'Разделы',
+          link: '#',
+        },
+        {
+          title: 'Группы',
+          link: '#',
+        },
+        {
+          title: 'Шаблоны',
+          link: '#',
+        },
+        {
+          title: 'Категории',
+          link: '/categories',
+        },
+      ],
+    },
+    {
       title: 'Фирмы',
       link: '/company',
       icon: 'metismenu-icon pe-7s-global',
@@ -72,7 +95,7 @@ const Menu = () => {
   ];
 
   const router = useRouter();
-  
+
   return (
     <div class="app-sidebar sidebar-shadow" style={{ zIndex: '10' }}>
       <div class="app-header__logo">

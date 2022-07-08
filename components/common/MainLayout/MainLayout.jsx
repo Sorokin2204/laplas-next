@@ -1,10 +1,13 @@
 import React from 'react';
+import ModalCategory from '../../pages/category/ModalCategory/ModalCategory';
 import ModalFirma from '../../pages/firm/ModalFirma/ModalFirma';
 import ModalRole from '../../pages/role/ModalRole/ModalRole';
 import ModalUser from '../../pages/user/ModalUser/ModalUser';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
+import { useSelector } from 'react-redux';
 const MainLayout = ({ children }) => {
+  const { modalCategory, modalUser, modalFirm, modalRole } = useSelector((state) => state.app);
   return (
     <>
       <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -29,9 +32,11 @@ const MainLayout = ({ children }) => {
         </div>
       </div>
       <div class="app-drawer-overlay d-none animated fadeIn"></div>
-      <ModalUser />
-      <ModalFirma />
-      <ModalRole />
+
+      {modalCategory && <ModalCategory />}
+      {modalUser && <ModalUser />}
+      {modalFirm && <ModalFirma />}
+      {modalRole && <ModalRole />}
     </>
   );
 };

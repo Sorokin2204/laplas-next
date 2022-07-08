@@ -22,7 +22,7 @@ const createRole = async ({ name }) => {
   const data = {
     U_ROLE__ID: uuidv4(),
     S_ROLE_NAME: name,
-    U_ROLE_CODE: '123',
+    U_ROLE_CODE: uuidv4(),
     C_ACTIVE: true,
   };
   const createRole = await prismaClient.REG_ROLES.create({ data: data });

@@ -3,7 +3,12 @@ import MainLayout from '../components/common/MainLayout/MainLayout';
 import { store } from '../redux/store';
 import { PrismaClient } from '@prisma/client';
 import '../styles/style.scss';
+import axios from 'axios';
 export default function MyApp({ Component, pageProps }) {
+  axios.interceptors.request.use((config) => {
+    console.log(config);
+    return config;
+  });
   return (
     <Provider store={store}>
       <MainLayout>

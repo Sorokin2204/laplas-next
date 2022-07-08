@@ -1,3 +1,6 @@
 import { PrismaClient } from '@prisma/client';
+import axios from 'axios';
 
-export const prismaClient = new PrismaClient();
+let global;
+
+export const prismaClient = global?.prism ?? new PrismaClient();
