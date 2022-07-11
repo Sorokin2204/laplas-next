@@ -6,8 +6,9 @@ import ModalUser from '../../pages/user/ModalUser/ModalUser';
 import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 import { useSelector } from 'react-redux';
+import ModalGroup from '../../pages/group/ModalGroup/ModalGroup';
 const MainLayout = ({ children }) => {
-  const { modalCategory, modalUser, modalFirm, modalRole } = useSelector((state) => state.app);
+  const { modalCategory, modalUser, modalFirm, modalRole, modalGroup } = useSelector((state) => state.app);
   return (
     <>
       <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
@@ -37,6 +38,7 @@ const MainLayout = ({ children }) => {
       {modalUser && <ModalUser />}
       {modalFirm && <ModalFirma />}
       {modalRole && <ModalRole />}
+      {modalGroup && <ModalGroup />}
     </>
   );
 };

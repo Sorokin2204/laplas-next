@@ -3,7 +3,7 @@ import styles from './Select.module.scss';
 import ReactSelect from 'react-select';
 import CreatableSelect from 'react-select/creatable';
 import { Controller } from 'react-hook-form';
-const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti, noSpace, setValue, value, form, name, isClearable }) => {
+const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti, noSpace, setValue, value, form, name, isClearable, rules = {} }) => {
   let close = '\\e870';
   const colourStyles = {
     multiValue: (styles) => ({
@@ -141,6 +141,7 @@ const Select = ({ placeholder, options, defaultValue, label, creatable, isMulti,
         <Controller
           render={({ field }) => <ReactSelect defaultValue={defaultValue} isMulti={isMulti} options={options} placeholder={placeholder ?? ''} noOptionsMessage={({ inputValue: string }) => 'Нет опций'} styles={colourStyles} {...field} isClearable={isClearable} />}
           name={name}
+          rules={rules}
           control={form.control}
         />
       ) : (

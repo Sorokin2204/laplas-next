@@ -1,10 +1,15 @@
 import React, { useState } from 'react';
 import OutsideClickHandler from 'react-outside-click-handler';
 import styles from './Header.module.scss';
+import { useRouter } from 'next/router';
+import { useTranslation } from 'next-i18next';
+import { localize } from '../../../public/locales/localize';
+import LangSelect from '../LangSelect/LangSelect';
 
 const Header = () => {
   const [oneSelect, setOneSelect] = useState(false);
   const [avatarSelect, setAvatarSelect] = useState(false);
+  const { locale } = useRouter();
   return (
     <div class="app-header header-shadow" style={{ zIndex: '10' }}>
       <div class="app-header__logo">
@@ -28,45 +33,7 @@ const Header = () => {
           gridGap: '8px',
           justifyContent: 'end',
         }}>
-        <div
-          style={{
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            cursor: 'pointer',
-            userSelect: 'none',
-          }}
-          onClick={() => {
-            setOneSelect(!oneSelect);
-          }}>
-          <div class="form-labelmb-0  me-1" style={{}}>
-            Golden Bush
-            <OutsideClickHandler
-              onOutsideClick={() => {
-                setOneSelect(false);
-              }}>
-              <div tabindex="-1" role="menu" aria-hidden="true" class={`dropdown-menu ${oneSelect ? 'show' : ''}`}>
-                <h6 tabindex="-1" class="dropdown-header">
-                  Header
-                </h6>
-                <button type="button" tabindex="0" class="dropdown-item">
-                  Menus
-                </button>
-                <button type="button" tabindex="0" class="dropdown-item">
-                  Settings
-                </button>
-                <button type="button" tabindex="0" class="dropdown-item">
-                  Actions
-                </button>
-                <div tabindex="-1" class="dropdown-divider"></div>
-                <button type="button" tabindex="0" class="dropdown-item">
-                  Dividers
-                </button>
-              </div>
-            </OutsideClickHandler>
-          </div>
-          <i class="pe-7s-angle-down  opacity-8" style={{ fontSize: '24px' }}></i>
-        </div>
+        <LangSelect />
         <div
           style={{
             display: 'flex',
@@ -91,7 +58,7 @@ const Header = () => {
               <h6 tabindex="-1" class="dropdown-header">
                 Header
               </h6>
-              <button type="button" tabindex="0" class="dropdown-item">
+              <button type="button" tabindex="0" class="dropdown-item active">
                 Menus
               </button>
               <button type="button" tabindex="0" class="dropdown-item">

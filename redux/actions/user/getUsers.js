@@ -11,7 +11,7 @@ export const getUsers = createAsyncThunk('user/getUsers', async (data = {}, { ge
       getUsers: { offset, page },
     },
   } = getState();
-  return axios.get(`api/users/`, { params: { offset, page, ...data } });
+  return axios.get(`${process.env.SERVER_URL}/users/`, { params: { offset, page, ...data } });
 });
 
 export const reducerGetUsers = {

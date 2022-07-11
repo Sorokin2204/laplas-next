@@ -17,6 +17,9 @@ import { v4 as uuidv4 } from 'uuid';
 import DragGroupSpecs from '../DragGroupSpecs/DragGroupSpecs';
 import { getGroupCategory } from '../../../../redux/actions/category/getGroupCategory';
 import { deleteCategory } from '../../../../redux/actions/category/deleteCategory';
+import { useRouter } from 'next/router';
+import MultiInputs from '../../../common/MultiInputs/MultiInputs';
+import { localize } from '../../../../public/locales/localize';
 export const typeFieldList = [
   {
     label: 'Строка',
@@ -33,6 +36,7 @@ const CategoryAddEdit = () => {
   const [viewGroupCategory, setViewGroupCategory] = useState([]);
   const [savedButton, setSavedButton] = useState(false);
   const categoryForm = useForm();
+  const { locale } = useRouter();
   const catGroupArray = useFieldArray({
     control: categoryForm.control,
     name: 'categorySpecs',
@@ -152,17 +156,18 @@ const CategoryAddEdit = () => {
               onClick={() => {
                 onAddNewSpec();
               }}>
-              <i class="lnr-plus-circle btn-icon-wrapper"></i>Добавить группу характеристик
+              <i class="lnr-plus-circle btn-icon-wrapper"></i>
+              {localize[locale].category.addGroupSpecs}
             </button>
             {savedButton ? (
               <button style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '37px', background: 'rgba(58, 196, 125,1)', border: '1px solid transparent ', color: '#fff' }} class="me-2 btn-icon btn btn-primary">
                 {<img src={'/success-icon-green.svg'} style={{ marginRight: '8px' }} />}
-                Сохраненно
+                {localize[locale].category.saved}
               </button>
             ) : (
               <button disabled={!editCategory} style={{ display: 'flex', alignItems: 'center', justifyContent: 'center', height: '37px', background: '#E0ECFF', border: '1px solid #E0ECFF', color: '#212529' }} class="me-2 btn-icon btn btn-primary" onClick={categoryForm.handleSubmit(onSaveCategory)}>
                 <img src={'/success-icon.svg'} style={{ marginRight: '8px' }} />
-                Сохранить
+                {localize[locale].category.save}
               </button>
             )}
           </div>
@@ -181,7 +186,7 @@ const CategoryAddEdit = () => {
               }}
               options={viewCategories}
               value={editCategory}
-              label="Категория"
+              label={localize[locale].category.label}
               noSpace
             />
             <button
@@ -192,11 +197,11 @@ const CategoryAddEdit = () => {
                 dispatch(setShowModalCategory(true));
                 dispatch(setShowCreateModalCategory(false));
               }}>
-              <i class="lnr-plus-circle btn-icon-wrapper"></i>Редактировать
+              <i class="lnr-plus-circle btn-icon-wrapper"></i> {localize[locale].category.edit}
             </button>
             <button style={{ display: 'flex', alignItems: 'center', height: '37px' }} type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class=" btn-icon btn btn-danger" disabled={!editCategory} onClick={() => onDeleteCategory()}>
               <i class="lnr-trash btn-icon-wrapper"></i>
-              Удалить
+              {localize[locale].category.delete}
             </button>
           </div>
           <button
@@ -206,13 +211,9 @@ const CategoryAddEdit = () => {
               dispatch(setShowModalCategory(true));
               dispatch(setShowCreateModalCategory(true));
             }}>
-            <i class="lnr-plus-circle btn-icon-wrapper"></i>Создать категорию
+            <i class="lnr-plus-circle btn-icon-wrapper"></i> {localize[locale].category.addCategory}
           </button>
-          {catGroupArray.fields?.length !== 0 ? (
-            catGroupArray.fields?.map((catGroup, index) => !catGroup?.deleted && <DragGroupSpecs catGroup={catGroup} index={index} form={categoryForm} fieldArray={catGroupArray} />)
-          ) : editCategory ? (
-            <div style={{ fontSize: '16px', margin: '0 auto', display: 'flex', justifyContent: 'center', padding: '32px 0' }}>Групп характеристик не найдено</div>
-          ) : null}
+          {editCategory && <MultiInputs isEditable isDeletable form={categoryForm} textNotFound={'Групп характеристик не найдено'} fieldArray={catGroupArray} />}
         </div>
         {(categoriesLoading || groupCategoryLoading || deleteCategoryLoading || createGroupCategoryLoading) && <Loading />}
       </div>

@@ -6,7 +6,7 @@ export const initStateDeleteRoles = {
 };
 
 export const deleteRoles = createAsyncThunk('user/deleteRoles', async (data) => {
-  return axios.post(`api/roles`, data);
+  return axios.post(`${process.env.SERVER_URL}/roles`, data);
 });
 
 export const reducerDeleteRoles = {

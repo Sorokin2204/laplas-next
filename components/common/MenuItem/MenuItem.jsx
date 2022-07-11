@@ -1,7 +1,10 @@
 import Link from 'next/link';
 import React from 'react';
+import { localize } from '../../../public/locales/localize';
 import styles from './MenuItem.module.scss';
+import { useRouter } from 'next/router';
 const MenuItem = ({ link, children, title, currentPath, icon }) => {
+  const { locale } = useRouter();
   return (
     <>
       <li>
@@ -9,7 +12,7 @@ const MenuItem = ({ link, children, title, currentPath, icon }) => {
           <a class={currentPath === link && 'mm-active'}>
             {icon && <i class={icon}></i>}
 
-            {title}
+            {localize[locale].menu[title]}
           </a>
         </Link>
         {children && children?.length !== 0 && (
@@ -17,7 +20,7 @@ const MenuItem = ({ link, children, title, currentPath, icon }) => {
             {children.map((child) => (
               <li>
                 <Link href={child.link}>
-                  <a class={currentPath === child.link && 'mm-active'}>{child.title}</a>
+                  <a class={currentPath === child.link && 'mm-active'}> {localize[locale].menu[child.title]}</a>
                 </Link>
               </li>
             ))}

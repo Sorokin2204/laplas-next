@@ -1,6 +1,10 @@
 import React from 'react';
 import styles from './Pagination.module.scss';
+import { useTranslation } from 'next-i18next';
+import { useRouter } from 'next/router';
+import { localize } from '../../../public/locales/localize';
 const Pagination = ({ pages, currentPage, onPageClick }) => {
+  const { locale } = useRouter();
   return (
     <div class="dataTables_paginate paging_simple_numbers" id="example_paginate">
       <ul class="pagination">
@@ -15,7 +19,7 @@ const Pagination = ({ pages, currentPage, onPageClick }) => {
             data-dt-idx="0"
             tabindex="0"
             class="page-link">
-            Назад
+            {localize[locale].table.backPage}
           </a>
         </li>
         {Array(pages)
@@ -47,7 +51,7 @@ const Pagination = ({ pages, currentPage, onPageClick }) => {
             data-dt-idx="7"
             tabindex="0"
             class="page-link">
-            Вперед
+            {localize[locale].table.nextPage}
           </a>
         </li>
       </ul>

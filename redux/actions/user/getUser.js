@@ -6,7 +6,7 @@ export const initStateGetUser = {
 };
 
 export const getUser = createAsyncThunk('user/getUser', async (id, { getState }) => {
-  return axios.get(`api/user/`, { params: { id } });
+  return axios.get(`${process.env.SERVER_URL}/user/`, { params: { id } });
 });
 
 export const reducerGetUser = {

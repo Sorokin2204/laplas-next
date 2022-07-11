@@ -23,6 +23,9 @@ export const categorySlice = createSlice({
   name: 'category',
   initialState,
   reducers: {
+    resetCreateGroupCategory: (state, action) => {
+      state.createGroupCategory.data = null;
+    },
     setEditCategory: (state, action) => {
       state.editCategory = action.payload;
     },
@@ -46,5 +49,5 @@ export const categorySlice = createSlice({
     ...reducerGetGroupCategory,
   },
 });
-export const { setEditCategory, setEditCategoryFull, resetCreateCategory, resetUpdateCategory } = categorySlice.actions;
+export const { setEditCategory, setEditCategoryFull, resetCreateCategory, resetUpdateCategory, resetCreateGroupCategory } = categorySlice.actions;
 export const categoryReducer = categorySlice.reducer;

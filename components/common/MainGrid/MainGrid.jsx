@@ -6,7 +6,9 @@ import styles from './MainGrid.module.scss';
 import { useDispatch } from 'react-redux';
 import { deleteUsers } from '../../../redux/actions/user/deleteUsers';
 import Pagination from '../Pagination/Pagination';
+import { useRouter } from 'next/router';
 import WrapTextInputIcon from '../WrapTextInputIcon/WrapTextInputIcon';
+import { localize } from '../../../public/locales/localize';
 const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading, selectable, onAdd, onEdit, onDelete, head, setSearch, search, pages, currentPage, onPageClick, onDeleteMany }) => {
   const onSelectRow = (checked, val) => {
     if (!checked) setSelectRows(selectRows.filter((sel) => sel[selectBy] !== val[selectBy]));
@@ -26,6 +28,7 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
   }, [data]);
 
   const dispatch = useDispatch();
+  const { locale } = useRouter();
   return data ? (
     <div class="main-card mb-3 card">
       <div class="card-body">
@@ -33,10 +36,11 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
           <div class="row">
             <div class="col-sm-12 col-md-6">
               <button class=" me-2 btn-icon btn btn-primary" onClick={() => onAdd()}>
-                <i class="lnr-plus-circle btn-icon-wrapper"></i>Добавить
+                <i class="lnr-plus-circle btn-icon-wrapper"></i>
+                {localize[locale].table.add}
               </button>
               <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class=" me-2 btn btn-danger" disabled={selectRows.length === 0} style={{ position: 'relative' }} onClick={() => onDeleteMany({ deleteIds: selectRows.map((selRow) => selRow[selectBy]) })}>
-                {` Удалить выбранные (${selectRows.length})`}
+                {` ${localize[locale].table.deleteSelected} (${selectRows.length})`}
               </button>
             </div>
           </div>
@@ -78,7 +82,9 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
                       ))}
 
                     <th style={{ textAlign: 'center', width: '100px' }}>
-                      <div class="card-title text-capitalize mb-0">Действие</div>
+                      <div class="card-title text-capitalize mb-0" style={{ fontSize: '16px' }}>
+                        {localize[locale].table.action}
+                      </div>
                     </th>
                   </tr>
                 </thead>
@@ -86,7 +92,7 @@ const MainGrid = ({ data, counted, selectBy, selectRows, setSelectRows, loading,
                   {data?.length == 0 ? (
                     <tr>
                       <td colSpan={'100%'}>
-                        <div style={{ fontSize: '16px', margin: '0 auto', display: 'flex', justifyContent: 'center', padding: '32px 0' }}>Результата нет</div>
+                        <div style={{ fontSize: '16px', margin: '0 auto', display: 'flex', justifyContent: 'center', padding: '32px 0' }}>{localize[locale].table.noResults}</div>
                       </td>
                     </tr>
                   ) : (

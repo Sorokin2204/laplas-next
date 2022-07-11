@@ -6,7 +6,7 @@ export const initStateDeleteUsers = {
 };
 
 export const deleteUsers = createAsyncThunk('user/deleteUsers', async (data) => {
-  return axios.post(`api/users`, data);
+  return axios.post(`${process.env.SERVER_URL}/users`, data);
 });
 
 export const reducerDeleteUsers = {

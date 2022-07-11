@@ -6,7 +6,7 @@ export const initStateCreateRole = {
 };
 
 export const createRole = createAsyncThunk('role/createRole', async (data) => {
-  return axios.post(`api/role`, data);
+  return axios.post(`${process.env.SERVER_URL}/role`, data);
 });
 
 export const reducerCreateRole = {

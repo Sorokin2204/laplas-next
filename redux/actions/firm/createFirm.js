@@ -6,7 +6,7 @@ export const initStateCreateFirm = {
 };
 
 export const createFirm = createAsyncThunk('firm/createFirm', async (data) => {
-  return axios.post(`api/firm`, data);
+  return axios.post(`${process.env.SERVER_URL}/firm`, data);
 });
 
 export const reducerCreateFirm = {

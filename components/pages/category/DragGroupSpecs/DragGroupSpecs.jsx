@@ -5,7 +5,7 @@ import DragGroup from '../../../common/DragGroup/DragGroup';
 import DragItem from '../../../common/DragItem/DragItem';
 import { v4 as uuidv4 } from 'uuid';
 import { typeFieldList } from '../CategoryAddEdit/CategoryAddEdit';
-const DragGroupSpecs = ({ index, form, catGroup, fieldArray }) => {
+const DragGroupSpecs = ({ index, form, catGroup, fieldArray, listName, subListName, defaultAddRow, isEditable, isDeletable }) => {
   const {
     fields: catItems,
     append,
@@ -21,6 +21,8 @@ const DragGroupSpecs = ({ index, form, catGroup, fieldArray }) => {
           e.stopPropagation();
           fieldArray.update(index, { ...catGroup, deleted: true });
         }}
+        isEditable={isEditable}
+        isDeletable={isDeletable}
         form={form}
         name={`categorySpecs[${index}].title`}
         title={catGroup?.title}

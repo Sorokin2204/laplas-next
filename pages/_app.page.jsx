@@ -4,7 +4,9 @@ import { store } from '../redux/store';
 import { PrismaClient } from '@prisma/client';
 import '../styles/style.scss';
 import axios from 'axios';
-export default function MyApp({ Component, pageProps }) {
+import { appWithTranslation } from 'next-i18next';
+
+function MyApp({ Component, pageProps }) {
   axios.interceptors.request.use((config) => {
     console.log(config);
     return config;
@@ -17,3 +19,4 @@ export default function MyApp({ Component, pageProps }) {
     </Provider>
   );
 }
+export default appWithTranslation(MyApp);

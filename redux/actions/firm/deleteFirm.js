@@ -6,7 +6,7 @@ export const initStateDeleteFirm = {
 };
 
 export const deleteFirm = createAsyncThunk('firm/deleteFirm', async (data) => {
-  return axios.post(`api/firm`, data);
+  return axios.post(`${process.env.SERVER_URL}/firm`, data);
 });
 
 export const reducerDeleteFirm = {

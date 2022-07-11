@@ -6,88 +6,88 @@ import MenuItem from '../MenuItem/MenuItem';
 const Menu = () => {
   const list = [
     {
-      title: 'Товары',
+      title: 'products',
       link: '/product/update',
       icon: 'metismenu-icon lnr-database',
     },
     {
-      title: 'Интеграции',
+      title: 'integrate',
       link: '# ',
       icon: 'metismenu-icon pe-7s-share',
       children: [
         {
-          title: 'Журнал',
+          title: 'magazine',
           link: '#',
         },
         {
-          title: 'Ozon Эвилент Маркет',
+          title: 'ozonEvilentMarket',
           link: '#',
         },
         {
-          title: 'Wildberries Эвилент Маркет',
+          title: 'wildberriesEvilentMarket',
           link: '#',
         },
         {
-          title: 'Я.Маркет FBS Эвилент',
+          title: 'yaMarketFBSEvilent',
           link: '#',
         },
         {
-          title: 'Ozon Эвилент',
+          title: 'ozonEvilent',
           link: '#',
         },
         {
-          title: 'Wildberries Эвилент',
+          title: 'wildberriesEvilent',
           link: '#',
         },
       ],
     },
     {
-      title: 'Справочники',
+      title: 'referenceBooks',
       link: '# ',
       icon: 'metismenu-icon pe-7s-share',
       children: [
         {
-          title: 'Разделы',
+          title: 'sections',
           link: '#',
         },
         {
-          title: 'Группы',
-          link: '#',
+          title: 'groups',
+          link: '/group',
         },
         {
-          title: 'Шаблоны',
-          link: '#',
+          title: 'templates',
+          link: '/template',
         },
         {
-          title: 'Категории',
+          title: 'categories',
           link: '/categories',
         },
       ],
     },
     {
-      title: 'Фирмы',
+      title: 'firms',
       link: '/company',
       icon: 'metismenu-icon pe-7s-global',
     },
     {
-      title: 'Настройки',
+      title: 'settings',
       link: '# ',
       icon: 'metismenu-icon pe-7s-share',
       children: [
         {
-          title: 'Параметры интеграций',
+          title: 'integrationOptions',
           link: '#',
         },
         {
-          title: 'Пользователи',
+          title: 'users',
           link: '/user',
         },
         {
-          title: 'Роли',
+          title: 'roles',
           link: '/role',
         },
         {
-          title: 'Поля отчета',
+          title: 'reportFields',
           link: '#',
         },
       ],

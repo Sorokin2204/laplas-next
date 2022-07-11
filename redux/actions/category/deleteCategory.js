@@ -6,7 +6,7 @@ export const initStateDeleteCategory = {
 };
 
 export const deleteCategory = createAsyncThunk('category/deleteCategory', async (data) => {
-  return axios.post(`api/category`, data);
+  return axios.post(`${process.env.SERVER_URL}/category`, data);
 });
 
 export const reducerDeleteCategory = {
