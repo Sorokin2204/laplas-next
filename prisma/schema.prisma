@@ -106,6 +106,60 @@ model USR_FIRMS {
   C_ACTIVE  Boolean?
 }
 
+//товары
+model USR_PRODUCTS {
+  U_PRODUCT_ID       String   @id @db.Uuid @default(uuid())
+  U_CATEGORY_ID     String?  @db.Uuid @default(uuid()) // категория товара от нее зависит отрисовка шаблона и поля
+  U_USER_ID     String?  @db.Uuid @default(uuid()) //пользователь автор
+  S_NAME         String  @db.VarChar(255)
+  S_CODE         String?  @db.VarChar(255) //код товара
+  S_TAGS         String?  @db.VarChar(255) //теги
+  C_ACTIVE        Boolean?
+}
+//разделы
+model USR_CHAPTERS {
+  U_CHAPTER_ID       String   @id @db.Uuid @default(uuid())
+  U_USER_FIRM_ID     String?  @db.Uuid @default(uuid()) // фирма в которой использовать раздел
+  U_USER_ID     String?  @db.Uuid @default(uuid()) //пользователь автор
+  S_NAME         String  @db.VarChar(255)
+  N_ORDER    Int  @db.Integer
+  C_ACTIVE        Boolean?
+}
+//шаблоны
+model USR_TEMPLATES {
+  U_TEMPLATE_ID       String   @id @db.Uuid @default(uuid())
+  U_CATEGORY_ID     String?  @db.Uuid @default(uuid()) // категория товара соответствует шаблону
+  S_NAME         String  @db.VarChar(255)
+  N_TYPE   Int  @db.Integer
+  C_ACTIVE        Boolean?
+}
+//разделы шаблонов
+model USR_TEMPLATE_CHAPTERS {
+  U_ID       String   @id @db.Uuid @default(uuid())
+  U_TEMPLATE_ID       String   @db.Uuid @default(uuid())
+  U_CHAPTER_ID     String  @db.Uuid @default(uuid()) 
+  N_ORDER   Int  @db.Integer
+}
+//группы разделов 
+model USR_CHAPTER_GROUPS{
+  U_ID       String   @id @db.Uuid @default(uuid())
+  U_GROUP_ID       String   @db.Uuid @default(uuid())
+  U_CHAPTER_ID     String  @db.Uuid @default(uuid()) 
+  N_ORDER   Int?  @db.Integer
+}
+//параметры (поля) группы  
+model USR_GROUP_PARAMS{
+  U_ID       String   @id @db.Uuid @default(uuid())
+  U_FIRM_ID     String  @db.Uuid @default(uuid()) 
+  U_CATEGORY_ID     String  @db.Uuid @default(uuid()) 
+  U_GROUP_ID     String  @db.Uuid @default(uuid()) 
+  S_NAME         String  @db.VarChar(255)
+  S_ADDITIONAL         String?
+  C_ACTIVE        Boolean?
+  N_TYPE   Int?  @db.Integer //тип поля параметра
+  N_ORDER  Int?
+}
+
 model USR_USERS {
   U_USER_ID       String   @id @db.Uuid @default(uuid())
   U_DOMAIN_ID     String?  @db.Uuid @default(uuid())
