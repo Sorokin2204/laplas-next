@@ -5,18 +5,39 @@ import { PrismaClient } from '@prisma/client';
 import '../styles/style.scss';
 import axios from 'axios';
 import { appWithTranslation } from 'next-i18next';
+import { SessionProvider } from "next-auth/react"
+import { useRouter } from 'next/router';
 
-function MyApp({ Component, pageProps }) {
+function MyApp({ Component, pageProps: { session, ...pageProps }, }) {
   axios.interceptors.request.use((config) => {
     console.log(config);
     return config;
   });
-  return (
-    <Provider store={store}>
-      <MainLayout>
-        <Component {...pageProps} />
-      </MainLayout>
-    </Provider>
-  );
+  const router = useRouter()
+
+  if (router.pathname.startsWith("/admin")) 
+	{
+	  return (
+	  
+		<SessionProvider session={session}>
+		<Provider store={store}>
+		  <MainLayout>
+			<Component {...pageProps} />
+		  </MainLayout>
+		</Provider>
+		</SessionProvider>
+	  );
+  
+	}
+	 return (
+				<SessionProvider session={session}>
+			    <Provider store={store}>
+				<Component {...pageProps} />
+				</Provider>
+				</SessionProvider>
+
+			)
+		
+	
 }
 export default appWithTranslation(MyApp);

@@ -1,18 +1,18 @@
-import MainGrid from '../../components/common/MainGrid/MainGrid';
-import Select from '../../components/common/Select/Select';
-import TextInput from '../../components/common/TextInput/TextInput';
+import MainGrid from '../../../components/common/MainGrid/MainGrid';
+import Select from '../../../components/common/Select/Select';
+import TextInput from '../../../components/common/TextInput/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../redux/actions/user/getUsers';
-import Modal from '../../components/common/Modal/Modal';
-import ModalUser from '../../components/pages/user/ModalUser/ModalUser';
-import { setShowModalUser } from '../../redux/slices/appSlice';
-import { getFirms } from '../../redux/actions/firm/getFirms';
-import { getRoles } from '../../redux/actions/role/getRoles';
-import { setEditUser, setPage } from '../../redux/slices/userSlice';
-import { deleteUser } from '../../redux/actions/user/deleteUser';
-import { deleteUsers } from '../../redux/actions/user/deleteUsers';
+import { getUsers } from '../../../redux/actions/user/getUsers';
+import Modal from '../../../components/common/Modal/Modal';
+import ModalUser from '../../../components/pages/user/ModalUser/ModalUser';
+import { setShowModalUser } from '../../../redux/slices/appSlice';
+import { getFirms } from '../../../redux/actions/firm/getFirms';
+import { getRoles } from '../../../redux/actions/role/getRoles';
+import { setEditUser, setPage } from '../../../redux/slices/userSlice';
+import { deleteUser } from '../../../redux/actions/user/deleteUser';
+import { deleteUsers } from '../../../redux/actions/user/deleteUsers';
 const UserPage = () => {
   const [viewData, setViewData] = useState(null);
   const [viewRoles, setViewRoles] = useState(null);
