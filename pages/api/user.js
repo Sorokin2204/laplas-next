@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 const userData = {
   S_AVATAR: ' ',
   S_FIRM_MAIN: 'fdf',
-  U_DOMAIN_ID: '1',
+  U_DOMAIN_ID: uuidv4(),
 };
 
 async function handle(req, res) {
@@ -19,6 +19,7 @@ async function handle(req, res) {
       const resault = await deleteUser(req.body?.deleteId);
       res.json(resault);
     } else {
+      console.log(req.body);
       const resault = await createUser(req.body);
       res.json(resault);
     }
@@ -38,6 +39,7 @@ const createUser = async ({ id, login, password, email, name, surname, locale, r
     S_LOGIN: login,
     S_PASSWORD_HASH: pass,
     U_DEFAULT_LOCALE_ID: locale,
+    // U_DEFAULT_LOCALE_ID: uuidv4(),
     U_ROLE_ID: role,
     U_USER_ID: uuidv4(),
     ...userData,
@@ -57,16 +59,20 @@ const createUser = async ({ id, login, password, email, name, surname, locale, r
 };
 
 const updateUser = async ({ id, login, password, email, name, surname, locale, role, active, firms }) => {
-  const pass = await bcrypt.hash(password, 3);
+  let pass;
+  if (password) {
+    pass = await bcrypt.hash(password, 3);
+  }
+
   const data = {
     C_ACTIVE: active,
     S_EMAIL: email,
     S_FIRSTNAME: name,
     S_LASTNAME: surname,
     S_LOGIN: login,
-    S_PASSWORD_HASH: pass,
     U_DEFAULT_LOCALE_ID: locale,
     U_ROLE_ID: role,
+    ...(pass && { S_PASSWORD_HASH: pass }),
   };
 
   await prismaClient.USR_USER_FIRMS.deleteMany({ where: { U_USER_ID: id } });

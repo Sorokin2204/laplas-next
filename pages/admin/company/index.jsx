@@ -1,15 +1,15 @@
-import MainGrid from '../../components/common/MainGrid/MainGrid';
-import Select from '../../components/common/Select/Select';
-import TextInput from '../../components/common/TextInput/TextInput';
+import MainGrid from '../../../components/common/MainGrid/MainGrid';
+import Select from '../../../components/common/Select/Select';
+import TextInput from '../../../components/common/TextInput/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect, useState } from 'react';
-import { setShowModalFirm, setShowModalUser } from '../../redux/slices/appSlice';
-import { getFirms } from '../../redux/actions/firm/getFirms';
-import { setEditFirm } from '../../redux/slices/firmSlice';
-import { deleteUser } from '../../redux/actions/user/deleteUser';
-import { deleteFirm } from '../../redux/actions/firm/deleteFirm';
-import { deleteFirms } from '../../redux/actions/firm/deleteFirms';
+import { setShowModalFirm, setShowModalUser } from '../../../redux/slices/appSlice';
+import { getFirms } from '../../../redux/actions/firm/getFirms';
+import { setEditFirm } from '../../../redux/slices/firmSlice';
+import { deleteUser } from '../../../redux/actions/user/deleteUser';
+import { deleteFirm } from '../../../redux/actions/firm/deleteFirm';
+import { deleteFirms } from '../../../redux/actions/firm/deleteFirms';
 const CompanyPage = () => {
   const [searchTable, setSearchTable] = useState(null);
   const [head, setHead] = useState(null);

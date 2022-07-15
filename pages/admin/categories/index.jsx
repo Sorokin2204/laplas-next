@@ -1,17 +1,17 @@
-import MainGrid from '../../components/common/MainGrid/MainGrid';
-import Select from '../../components/common/Select/Select';
-import TextInput from '../../components/common/TextInput/TextInput';
+import MainGrid from '../../../components/common/MainGrid/MainGrid';
+import Select from '../../../components/common/Select/Select';
+import TextInput from '../../../components/common/TextInput/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect, useState } from 'react';
-import { setShowModalCategory, setShowModalUser } from '../../redux/slices/appSlice';
-import { getCategories } from '../../redux/actions/category/getCategories';
-import { setEditCategory } from '../../redux/slices/categorySlice';
-import { deleteUser } from '../../redux/actions/user/deleteUser';
-import { deleteCategory } from '../../redux/actions/category/deleteCategory';
-import { deleteCategories } from '../../redux/actions/category/deleteCategories';
-import CategoryAddEdit from '../../components/pages/category/CategoryAddEdit/CategoryAddEdit';
-import DragGroup from '../../components/common/DragGroup/DragGroup';
+import { setShowModalCategory, setShowModalUser } from '../../../redux/slices/appSlice';
+import { getCategories } from '../../../redux/actions/category/getCategories';
+import { setEditCategory } from '../../../redux/slices/categorySlice';
+import { deleteUser } from '../../../redux/actions/user/deleteUser';
+import { deleteCategory } from '../../../redux/actions/category/deleteCategory';
+import { deleteCategories } from '../../../redux/actions/category/deleteCategories';
+import CategoryAddEdit from '../../../components/pages/category/CategoryAddEdit/CategoryAddEdit';
+import DragGroup from '../../../components/common/DragGroup/DragGroup';
 const CategoryPage = () => {
   const [searchTable, setSearchTable] = useState(null);
   const [head, setHead] = useState(null);

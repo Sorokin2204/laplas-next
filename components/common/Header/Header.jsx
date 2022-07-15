@@ -5,11 +5,14 @@ import { useRouter } from 'next/router';
 import { useTranslation } from 'next-i18next';
 import { localize } from '../../../public/locales/localize';
 import LangSelect from '../LangSelect/LangSelect';
-
+import { signOut } from 'next-auth/react';
+import { useSession } from 'next-auth/react';
+import FirmSelect from '../FirmSelect/FirmSelect';
 const Header = () => {
   const [oneSelect, setOneSelect] = useState(false);
   const [avatarSelect, setAvatarSelect] = useState(false);
   const { locale } = useRouter();
+  const { data: session } = useSession();
   return (
     <div class="app-header header-shadow" style={{ zIndex: '10' }}>
       <div class="app-header__logo">
@@ -27,13 +30,14 @@ const Header = () => {
       <div
         style={{
           display: 'grid',
-          gridTemplateColumns: 'auto auto auto auto',
+          gridTemplateColumns: 'auto auto auto auto auto auto',
           alignItems: 'center',
           marginLeft: 'auto',
           gridGap: '8px',
           justifyContent: 'end',
         }}>
         <LangSelect />
+        <FirmSelect />
         <div
           style={{
             display: 'flex',
@@ -48,7 +52,7 @@ const Header = () => {
             setAvatarSelect(!avatarSelect);
           }}>
           <img width="42" class="avatar-icon  me-2 " src="/img/1.jpg" alt="" />
-          <div class="form-labelmb-0  me-1">Клементина Сергеева</div>
+          <div class="form-labelmb-0  me-1">{`${session?.user?.name} ${session?.user?.lastName}`}</div>
           <i class="pe-7s-angle-down  opacity-8" style={{ fontSize: '24px' }}></i>{' '}
           <OutsideClickHandler
             onOutsideClick={() => {
@@ -81,7 +85,7 @@ const Header = () => {
             <span class="badge badge-dot badge-dot-sm bg-primary">Notifications</span>
           </span>
         </button>
-        <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0 me-4 btn btn-link">
+        <button type="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown" class="p-0  btn btn-link me-1">
           <span class="icon-wrapper icon-wrapper-alt rounded-circle" style={{ width: '44px', height: '44px' }}>
             <span class="icon-wrapper-bg bg-danger"></span>
             <i class="icon text-danger pe-7s-bell" style={{ fontSize: '21px' }}></i>
@@ -95,6 +99,9 @@ const Header = () => {
             }}>
             Notifications
           </span>
+        </button>{' '}
+        <button type="button" className=" me-4 btn btn-danger" onClick={() => signOut()}>
+          Выйти
         </button>
       </div>
     </div>

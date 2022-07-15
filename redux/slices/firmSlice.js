@@ -18,6 +18,9 @@ export const firmSlice = createSlice({
   name: 'firm',
   initialState,
   reducers: {
+    resetFirm: (state, action) => {
+      state.createFirm.data = null;
+    },
     setEditFirm: (state, action) => {
       state.editFirm = action.payload;
     },
@@ -30,5 +33,5 @@ export const firmSlice = createSlice({
     ...reducerDeleteFirms,
   },
 });
-export const { setEditFirm } = firmSlice.actions;
+export const { setEditFirm, resetFirm } = firmSlice.actions;
 export const firmReducer = firmSlice.reducer;

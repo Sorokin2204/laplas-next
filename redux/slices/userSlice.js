@@ -20,6 +20,10 @@ export const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
+    resetUser: (state, action) => {
+      state.createUser.data = null;
+      state.updateUser.data = null;
+    },
     setEditUser: (state, action) => {
       state.editUser = action.payload;
     },
@@ -33,5 +37,5 @@ export const userSlice = createSlice({
     ...reducerGetUser,
   },
 });
-export const { setEditUser, setPage } = userSlice.actions;
+export const { setEditUser, setPage, resetUser } = userSlice.actions;
 export const userReducer = userSlice.reducer;

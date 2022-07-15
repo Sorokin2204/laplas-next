@@ -24,6 +24,7 @@ const LangSelect = () => {
           alignItems: 'center',
           cursor: 'pointer',
           userSelect: 'none',
+          marginLeft: 'auto',
         }}
         onClick={() => {
           setOpen(!open);

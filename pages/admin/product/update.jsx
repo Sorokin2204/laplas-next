@@ -1,15 +1,15 @@
-import Accordion from '../../components/common/Accordion/Accordion';
-import CardToggle from '../../components/common/CardToggle/CardToggle';
-import Select from '../../components/common/Select/Select';
-import TextInput from '../../components/common/TextInput/TextInput';
-import AccordionAllSpecs from '../../components/pages/upload/AccordionAllSpecs/AccordionAllSpecs';
-import AccordionCommon from '../../components/pages/upload/AccordionCommon/AccordionCommon';
-import AccordionFeatures from '../../components/pages/upload/AccordionFeatures/AccordionFeatures';
-import AccordionInfographic from '../../components/pages/upload/AccordionInfographic/AccordionInfographic';
-import AccordionLinks from '../../components/pages/upload/AccordionLinks/AccordionLinks';
-import AccordionManufactures from '../../components/pages/upload/AccordionManufactures/AccordionManufactures';
-import AccordionPhotoVideo from '../../components/pages/upload/AccordionPhotoVideo/AccordionPhotoVideo';
-import AccordionPromotion from '../../components/pages/upload/AccordionPromotion/AccordionPromotion';
+import Accordion from '../../../components/common/Accordion/Accordion';
+import CardToggle from '../../../components/common/CardToggle/CardToggle';
+import Select from '../../../components/common/Select/Select';
+import TextInput from '../../../components/common/TextInput/TextInput';
+import AccordionAllSpecs from '../../../components/pages/upload/AccordionAllSpecs/AccordionAllSpecs';
+import AccordionCommon from '../../../components/pages/upload/AccordionCommon/AccordionCommon';
+import AccordionFeatures from '../../../components/pages/upload/AccordionFeatures/AccordionFeatures';
+import AccordionInfographic from '../../../components/pages/upload/AccordionInfographic/AccordionInfographic';
+import AccordionLinks from '../../../components/pages/upload/AccordionLinks/AccordionLinks';
+import AccordionManufactures from '../../../components/pages/upload/AccordionManufactures/AccordionManufactures';
+import AccordionPhotoVideo from '../../../components/pages/upload/AccordionPhotoVideo/AccordionPhotoVideo';
+import AccordionPromotion from '../../../components/pages/upload/AccordionPromotion/AccordionPromotion';
 
 const Update = () => {
   const colourOptions = [

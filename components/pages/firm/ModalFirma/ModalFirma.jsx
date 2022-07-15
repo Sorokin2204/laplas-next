@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import { createFirm } from '../../../../redux/actions/firm/createFirm';
 import { updateFirm } from '../../../../redux/actions/firm/updateFirm';
 import { setShowModalFirm } from '../../../../redux/slices/appSlice';
-import { setEditFirm } from '../../../../redux/slices/firmSlice';
+import { resetFirm, setEditFirm } from '../../../../redux/slices/firmSlice';
 import styles from './ModalFirma.module.scss';
 import { useForm } from 'react-hook-form';
 
@@ -36,6 +36,7 @@ const ModalFirma = () => {
       dispatch(setShowModalFirm(false));
       dispatch(getFirms());
       dispatch(setEditFirm(null));
+      dispatch(resetFirm());
       firmForm.reset();
     }
   }, [updateData, updateLoading]);
@@ -44,6 +45,7 @@ const ModalFirma = () => {
     if (createData && !createLoading) {
       dispatch(setShowModalFirm(false));
       dispatch(getFirms());
+      dispatch(resetFirm());
       firmForm.reset();
     }
   }, [createData, createLoading]);

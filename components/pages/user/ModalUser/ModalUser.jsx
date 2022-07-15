@@ -9,7 +9,7 @@ import { createUser } from '../../../../redux/actions/user/createUser';
 import Loading from '../../../common/Loading/Loading';
 import { getUsers } from '../../../../redux/actions/user/getUsers';
 import { updateUser } from '../../../../redux/actions/user/updateUser';
-import { setEditUser } from '../../../../redux/slices/userSlice';
+import { resetUser, setEditUser } from '../../../../redux/slices/userSlice';
 import Select from '../../../common/Select/Select';
 import clsx from 'clsx';
 import RadioCard from '../../../common/RadioCard/RadioCard';
@@ -50,8 +50,8 @@ const ModalUser = () => {
   const [viewRoles, setViewRoles] = useState();
   const [viewFirms, setViewFirms] = useState();
   const [viewLocale, setViewLocale] = useState([
-    { label: 'Русская', value: '1' },
-    { label: 'Англиская', value: '2' },
+    { label: 'Русская', value: 'ca02a972-c26d-418b-bad7-f893cf0bd7f8' },
+    { label: 'Англиская', value: '2e409aa8-11a2-490a-b59d-0bc91fde5b16' },
   ]);
   const [viewActive, setViewActive] = useState([
     { label: 'Активен', value: true },
@@ -75,6 +75,7 @@ const ModalUser = () => {
       dispatch(setShowModalUser(false));
       dispatch(getUsers());
       dispatch(setEditUser(null));
+      dispatch(resetUser());
       userForm.reset();
     }
   }, [updateData, updateLoading, deleteData, deleteLoading]);
@@ -83,15 +84,16 @@ const ModalUser = () => {
     if (createData && !createLoading) {
       dispatch(setShowModalUser(false));
       dispatch(getUsers());
+      dispatch(resetUser());
       userForm.reset();
     }
   }, [createData, createLoading]);
-
+  console.log(userForm.formState.errors);
   useEffect(() => {
     if (getUserData && editUser) {
       userForm.setValue('login', getUserData?.S_LOGIN);
       userForm.setValue('name', getUserData?.S_FIRSTNAME);
-      userForm.setValue('surname', getUserData?.S_FIRSTNAME);
+      userForm.setValue('surname', getUserData?.S_LASTNAME);
       userForm.setValue('email', getUserData?.S_EMAIL);
       userForm.setValue('active', getUserData?.C_ACTIVE);
       userForm.setValue('password', '');
@@ -182,7 +184,7 @@ const ModalUser = () => {
               <TextInput name="name" form={userForm} label="Имя" rules={{ required: true }} noSpace />
               <TextInput name="surname" form={userForm} label="Фамилия" rules={{ required: true }} noSpace />
               <TextInput name="login" form={userForm} label="Логин" noSpace rules={{ required: true }} />
-              <TextInput name="password" form={userForm} label="Пароль" rules={{ required: true }} noSpace />
+              <TextInput name="password" form={userForm} label="Пароль" rules={{ required: editUser ? false : true }} noSpace />
               <TextInput name="email" form={userForm} label="Почта" rules={{ required: true }} noSpace />
               <Select setValue={(val) => userForm.setValue('locale', val)} label="Локаль" options={viewLocale} value={watchLocale} noSpace />
               <div style={{ gridColumn: '1/3' }}>

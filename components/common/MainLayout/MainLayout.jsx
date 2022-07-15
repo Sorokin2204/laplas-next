@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import ModalCategory from '../../pages/category/ModalCategory/ModalCategory';
 import ModalFirma from '../../pages/firm/ModalFirma/ModalFirma';
 import ModalRole from '../../pages/role/ModalRole/ModalRole';
@@ -7,9 +7,19 @@ import Header from '../Header/Header';
 import Menu from '../Menu/Menu';
 import { useSelector } from 'react-redux';
 import ModalGroup from '../../pages/group/ModalGroup/ModalGroup';
+import { useSession } from 'next-auth/react';
+import { useRouter } from 'next/router';
+import Loading from '../Loading/Loading';
 const MainLayout = ({ children }) => {
   const { modalCategory, modalUser, modalFirm, modalRole, modalGroup } = useSelector((state) => state.app);
-  return (
+  const router = useRouter();
+  const { status } = useSession();
+  useEffect(() => {
+    if (status === 'unauthenticated') {
+      router.push('/login');
+    }
+  }, [status]);
+  return status === 'authenticated' ? (
     <>
       <div class="app-container app-theme-white body-tabs-shadow fixed-header fixed-sidebar">
         <Header />
@@ -40,6 +50,8 @@ const MainLayout = ({ children }) => {
       {modalRole && <ModalRole />}
       {modalGroup && <ModalGroup />}
     </>
+  ) : (
+    <Loading />
   );
 };
 

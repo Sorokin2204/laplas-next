@@ -1,15 +1,15 @@
-import MainGrid from '../../components/common/MainGrid/MainGrid';
-import Select from '../../components/common/Select/Select';
-import TextInput from '../../components/common/TextInput/TextInput';
+import MainGrid from '../../../components/common/MainGrid/MainGrid';
+import Select from '../../../components/common/Select/Select';
+import TextInput from '../../../components/common/TextInput/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
-import { getGroups } from '../../redux/actions/group/getGroups';
-import { deleteGroups } from '../../redux/actions/group/deleteGroups';
+import { getGroups } from '../../../redux/actions/group/getGroups';
+import { deleteGroups } from '../../../redux/actions/group/deleteGroups';
 import { useEffect, useState } from 'react';
-import { getCategories } from '../../redux/actions/category/getCategories';
-import { setEditGroup } from '../../redux/slices/groupSlice';
-import { setShowModalGroup } from '../../redux/slices/appSlice';
-import { deleteGroup } from '../../redux/actions/group/deleteGroup';
-import { getGroup } from '../../redux/actions/group/getGroup';
+import { getCategories } from '../../../redux/actions/category/getCategories';
+import { setEditGroup } from '../../../redux/slices/groupSlice';
+import { setShowModalGroup } from '../../../redux/slices/appSlice';
+import { deleteGroup } from '../../../redux/actions/group/deleteGroup';
+import { getGroup } from '../../../redux/actions/group/getGroup';
 const GroupPage = () => {
   const [searchTable, setSearchTable] = useState(null);
   const [head, setHead] = useState(null);

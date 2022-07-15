@@ -1,18 +1,20 @@
-import MainGrid from '../../components/common/MainGrid/MainGrid';
-import Select from '../../components/common/Select/Select';
-import TextInput from '../../components/common/TextInput/TextInput';
+import MainGrid from '../../../components/common/MainGrid/MainGrid';
+import Select from '../../../components/common/Select/Select';
+import TextInput from '../../../components/common/TextInput/TextInput';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { useEffect, useState } from 'react';
-import { getUsers } from '../../redux/actions/user/getUsers';
-import Modal from '../../components/common/Modal/Modal';
-import ModalUser from '../../components/pages/user/ModalUser/ModalUser';
-import { setShowModalUser } from '../../redux/slices/appSlice';
-import { getFirms } from '../../redux/actions/firm/getFirms';
-import { getRoles } from '../../redux/actions/role/getRoles';
-import { setEditUser, setPage } from '../../redux/slices/userSlice';
-import { deleteUser } from '../../redux/actions/user/deleteUser';
-import { deleteUsers } from '../../redux/actions/user/deleteUsers';
+import { getUsers } from '../../../redux/actions/user/getUsers';
+import Modal from '../../../components/common/Modal/Modal';
+import ModalUser from '../../../components/pages/user/ModalUser/ModalUser';
+import ErrorPage from 'next/error';
+import { setShowModalUser } from '../../../redux/slices/appSlice';
+import { getFirms } from '../../../redux/actions/firm/getFirms';
+import { getRoles } from '../../../redux/actions/role/getRoles';
+import { setEditUser, setPage } from '../../../redux/slices/userSlice';
+import { deleteUser } from '../../../redux/actions/user/deleteUser';
+import { deleteUsers } from '../../../redux/actions/user/deleteUsers';
+import { useSession } from 'next-auth/react';
 const UserPage = () => {
   const [viewData, setViewData] = useState(null);
   const [viewRoles, setViewRoles] = useState(null);
@@ -110,35 +112,47 @@ const UserPage = () => {
       dispath(getUsers({ ...searchTable, page: 1 }));
     }
   }, [searchTable]);
-
-  return (
-    <>
-      <MainGrid
-        head={head}
-        data={viewData}
-        counted
-        selectBy="U_USER_ID"
-        setSelectRows={setSelectRows}
-        search={searchTable}
-        setSearch={setSearchTable}
-        selectRows={selectRows}
-        loading={usersLoading || deleteLoading || deleteManyLoading}
-        selectable
-        pages={pages}
-        currentPage={page}
-        onAdd={() => {
-          dispath(setEditUser(null));
-          dispath(setShowModalUser(true));
-        }}
-        onEdit={(val) => {
-          dispath(setEditUser(val));
-          dispath(setShowModalUser(true));
-        }}
-        onDeleteMany={(ids) => dispath(deleteUsers(ids))}
-        onDelete={(val) => dispath(deleteUser({ deleteId: val?.U_USER_ID }))}
-        onPageClick={(page) => dispath(getUsers({ ...searchTable, page }))}
-      />
-    </>
+  const { data: session } = useSession();
+  console.log(session);
+  return session.user.role === 'Администратор' ? (
+    <MainGrid
+      head={head}
+      data={viewData}
+      counted
+      selectBy="U_USER_ID"
+      setSelectRows={setSelectRows}
+      search={searchTable}
+      setSearch={setSearchTable}
+      selectRows={selectRows}
+      loading={usersLoading || deleteLoading || deleteManyLoading}
+      selectable
+      pages={pages}
+      currentPage={page}
+      onAdd={() => {
+        dispath(setEditUser(null));
+        dispath(setShowModalUser(true));
+      }}
+      onEdit={(val) => {
+        dispath(setEditUser(val));
+        dispath(setShowModalUser(true));
+      }}
+      onDeleteMany={(ids) => dispath(deleteUsers(ids))}
+      onDelete={(val) => dispath(deleteUser({ deleteId: val?.U_USER_ID }))}
+      onPageClick={(page) => dispath(getUsers({ ...searchTable, page }))}
+    />
+  ) : (
+    <div
+      style={{
+        color: '#6c757d',
+        fontSize: '24px',
+        fontWeight: '700',
+        height: '100%',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+      }}>
+      Страница не найдена
+    </div>
   );
 };
 
