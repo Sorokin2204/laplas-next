@@ -34,7 +34,7 @@ export const ru = {
     addCategory: 'Создать категорию',
     addSpec: 'Добавить характеристику',
     editSpec: 'Настроить',
-    edit: 'Редактировать',
+    edit: 'Изменить',
     delete: 'Удалить',
     saved: 'Сохранено',
     label: 'Категория',

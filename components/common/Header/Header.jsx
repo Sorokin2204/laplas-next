@@ -8,9 +8,12 @@ import LangSelect from '../LangSelect/LangSelect';
 import { signOut } from 'next-auth/react';
 import { useSession } from 'next-auth/react';
 import FirmSelect from '../FirmSelect/FirmSelect';
+import axios from 'axios';
+import Loading from '../Loading/Loading';
 const Header = () => {
   const [oneSelect, setOneSelect] = useState(false);
   const [avatarSelect, setAvatarSelect] = useState(false);
+  const [loading, setLoading] = useState(false);
   const { locale } = useRouter();
   const { data: session } = useSession();
   return (
@@ -100,9 +103,22 @@ const Header = () => {
             Notifications
           </span>
         </button>{' '}
-        <button type="button" className=" me-4 btn btn-danger" onClick={() => signOut()}>
+        <button
+          type="button"
+          className=" me-4 btn btn-danger"
+          onClick={async () => {
+            try {
+              setLoading(true);
+              await axios.post(`${process.env.SERVER_URL}/exit-session`, { sessionId: session.user.sessionId });
+            } catch (error) {
+            } finally {
+              setLoading(false);
+              signOut();
+            }
+          }}>
           Выйти
         </button>
+        {loading && <Loading fixed />}
       </div>
     </div>
   );

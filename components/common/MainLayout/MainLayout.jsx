@@ -10,8 +10,9 @@ import ModalGroup from '../../pages/group/ModalGroup/ModalGroup';
 import { useSession } from 'next-auth/react';
 import { useRouter } from 'next/router';
 import Loading from '../Loading/Loading';
+import ModalSection from '../../pages/section/ModalSection/ModalSection';
 const MainLayout = ({ children }) => {
-  const { modalCategory, modalUser, modalFirm, modalRole, modalGroup } = useSelector((state) => state.app);
+  const { modalCategory, modalUser, modalFirm, modalRole, modalGroup, modalSection } = useSelector((state) => state.app);
   const router = useRouter();
   const { status } = useSession();
   useEffect(() => {
@@ -49,6 +50,7 @@ const MainLayout = ({ children }) => {
       {modalFirm && <ModalFirma />}
       {modalRole && <ModalRole />}
       {modalGroup && <ModalGroup />}
+      {modalSection && <ModalSection />}
     </>
   ) : (
     <Loading />

@@ -6,7 +6,7 @@ import bcrypt from 'bcrypt';
 const userData = {
   S_AVATAR: ' ',
   S_FIRM_MAIN: 'fdf',
-  U_DOMAIN_ID: uuidv4(),
+  // U_DOMAIN_ID: uuidv4(),
 };
 
 async function handle(req, res) {
@@ -29,7 +29,7 @@ async function handle(req, res) {
   }
 }
 
-const createUser = async ({ id, login, password, email, name, surname, locale, role, active, firms }) => {
+const createUser = async ({ id, login, password, email, name, surname, locale, role, active, firms, domain }) => {
   const pass = await bcrypt.hash(password, 3);
   const data = {
     C_ACTIVE: active,
@@ -42,6 +42,7 @@ const createUser = async ({ id, login, password, email, name, surname, locale, r
     // U_DEFAULT_LOCALE_ID: uuidv4(),
     U_ROLE_ID: role,
     U_USER_ID: uuidv4(),
+    U_DOMAIN_ID: domain,
     ...userData,
   };
 

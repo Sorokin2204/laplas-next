@@ -213,7 +213,19 @@ const CategoryAddEdit = () => {
             }}>
             <i class="lnr-plus-circle btn-icon-wrapper"></i> {localize[locale].category.addCategory}
           </button>
-          {editCategory && <MultiInputs isEditable isDeletable form={categoryForm} textNotFound={'Групп характеристик не найдено'} fieldArray={catGroupArray} />}
+          {editCategory && (
+            <MultiInputs
+              newRow={(index, length) => [
+                { type: 'text', value: '', name: `categorySpecs[${index}].list[${length}].specs[0].value` },
+                { type: 'select', value: typeFieldList[0], name: `categorySpecs[${index}].list[${length}].specs[1].value`, options: typeFieldList },
+              ]}
+              isEditable
+              isDeletable
+              form={categoryForm}
+              textNotFound={'Групп характеристик не найдено'}
+              fieldArray={catGroupArray}
+            />
+          )}
         </div>
         {(categoriesLoading || groupCategoryLoading || deleteCategoryLoading || createGroupCategoryLoading) && <Loading />}
       </div>

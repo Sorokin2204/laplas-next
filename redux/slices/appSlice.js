@@ -1,6 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 
-export const initialState = { modalUser: false, modalFirm: false, modalRole: false, modalCategory: false, modalCreateCategory: false, modalGroup: false };
+export const initialState = { modalUser: false, modalFirm: false, modalRole: false, modalCategory: false, modalCreateCategory: false, modalGroup: false, modalSection: false };
 
 export const appSlice = createSlice({
   name: 'app',
@@ -24,7 +24,10 @@ export const appSlice = createSlice({
     setShowModalRole: (state, { payload }) => {
       state.modalRole = payload;
     },
+    setShowModalSection: (state, { payload }) => {
+      state.modalSection = payload;
+    },
   },
 });
-export const { setShowModalUser, setShowModalFirm, setShowModalRole, setShowModalCategory, setShowCreateModalCategory, setShowModalGroup } = appSlice.actions;
+export const { setShowModalUser, setShowModalFirm, setShowModalRole, setShowModalCategory, setShowCreateModalCategory, setShowModalGroup, setShowModalSection } = appSlice.actions;
 export const appReducer = appSlice.reducer;

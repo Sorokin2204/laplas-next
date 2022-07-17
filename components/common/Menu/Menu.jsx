@@ -48,7 +48,7 @@ const Menu = () => {
       children: [
         {
           title: 'sections',
-          link: '#',
+          link: '/section',
         },
         {
           title: 'groups',

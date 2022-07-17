@@ -176,7 +176,17 @@ const ModalGroup = () => {
             <div>
               <TextInput name="name" form={groupForm} label="Название" noSpace rules={{ required: true }} />
               <Select label="Категория" name="category" rules={{ required: true }} form={groupForm} options={viewCategories} />
-              {viewGroupCategory && <MultiInputs form={groupForm} textNotFound={'Групп характеристик не найдено'} fieldArray={catGroupArray} />}
+              {viewGroupCategory && (
+                <MultiInputs
+                  newRow={(index, length) => [
+                    { type: 'text', value: '', name: `categorySpecs[${index}].list[${length}].specs[0].value` },
+                    { type: 'select', value: typeFieldList[0], name: `categorySpecs[${index}].list[${length}].specs[1].value`, options: typeFieldList },
+                  ]}
+                  form={groupForm}
+                  textNotFound={'Групп характеристик не найдено'}
+                  fieldArray={catGroupArray}
+                />
+              )}
             </div>
             <div style={{ marginTop: '16px' }}>
               <button type="button" class="btn btn-primary" onClick={groupForm.handleSubmit(onSubmit)}>

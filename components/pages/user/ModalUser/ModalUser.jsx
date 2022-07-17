@@ -19,7 +19,9 @@ import { getFirms } from '../../../../redux/actions/firm/getFirms';
 import { getRoles } from '../../../../redux/actions/role/getRoles';
 import generator from 'generate-password';
 import { deleteUser } from '../../../../redux/actions/user/deleteUser';
+import { useSession } from 'next-auth/react';
 const ModalUser = () => {
+  const { data: session } = useSession();
   const defaultValues = {
     login: '',
     name: '',
@@ -66,7 +68,7 @@ const ModalUser = () => {
       if (editUser) {
         dispatch(updateUser({ ...data, locale: data.locale.value, id: editUser.U_USER_ID, firms: data?.firms ? data?.firms?.map((firm) => firm.value) : [] }));
       } else {
-        dispatch(createUser({ ...data, locale: data.locale.value, firms: data?.firms ? data?.firms?.map((firm) => firm.value) : [] }));
+        dispatch(createUser({ ...data, locale: data.locale.value, domain: session.user.domain, firms: data?.firms ? data?.firms?.map((firm) => firm.value) : [] }));
       }
     }
   };
@@ -110,6 +112,17 @@ const ModalUser = () => {
       userForm.reset();
     }
   }, [getUserData]);
+
+  useEffect(() => {
+    if (viewRoles) {
+      if (getUserData && editUser) {
+        userForm.setValue('role', viewRoles?.find((viewRole) => viewRole.value === getUserData?.U_ROLE_ID)?.value);
+      } else {
+        userForm.setValue('role', viewRoles?.find((viewRole) => viewRole.label === 'Пользователь')?.value);
+      }
+    }
+  }, [getUserData, editUser, viewRoles]);
+
   useEffect(() => {
     if (editUser?.U_USER_ID) {
       dispatch(getUser(editUser?.U_USER_ID));
