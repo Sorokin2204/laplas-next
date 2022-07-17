@@ -6,7 +6,7 @@ export const initStateCreateGroupCategory = {
 };
 
 export const createGroupCategory = createAsyncThunk('category/createGroupCategory', async (data) => {
-  return axios.post(`${process.env.SERVER_URL}/category-group`, data);
+  return axios.post(`${window.location.origin + '/api'}/category-group`, data);
 });
 
 export const reducerCreateGroupCategory = {

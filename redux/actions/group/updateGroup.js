@@ -6,7 +6,7 @@ export const initStateUpdateGroup = {
 };
 
 export const updateGroup = createAsyncThunk('group/updateGroup', async (data) => {
-  return axios.patch(`${process.env.SERVER_URL}/group`, data);
+  return axios.patch(`${window.location.origin + '/api'}/group`, data);
 });
 
 export const reducerUpdateGroup = {

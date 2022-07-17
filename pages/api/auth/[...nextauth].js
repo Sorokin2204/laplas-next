@@ -1,6 +1,8 @@
 import axios from 'axios';
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
+import absoluteUrl from 'next-absolute-url';
+
 export default NextAuth({
   providers: [
     CredentialProvider({
@@ -11,9 +13,8 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         try {
-          // const host = req.headers.host.split('.')[0];
-          // console.log('HOSTTT', req.headers.host);
-          const response = await axios.post(`${req.headers.origin}/api/auth`, { email: credentials.email, password: credentials.password });
+          const { origin } = absoluteUrl(req);
+          const response = await axios.post(`${origin}/api/auth`, { email: credentials.email, password: credentials.password });
           return response.data;
         } catch (error) {
           console.log(error);

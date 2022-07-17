@@ -6,7 +6,7 @@ export const initStateDeleteSection = {
 };
 
 export const deleteSection = createAsyncThunk('section/deleteSection', async (data) => {
-  return axios.post(`${process.env.SERVER_URL}/section`, data);
+  return axios.post(`${window.location.origin + '/api'}/section`, data);
 });
 
 export const reducerDeleteSection = {

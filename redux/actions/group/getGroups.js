@@ -11,7 +11,7 @@ export const getGroups = createAsyncThunk('group/getGroups', async (data = {}, {
       getGroups: { offset, page },
     },
   } = getState();
-  return axios.get(`${process.env.SERVER_URL}/groups/`, { params: { offset, page, ...data } });
+  return axios.get(`${window.location.origin + '/api'}/groups/`, { params: { offset, page, ...data } });
 });
 
 export const reducerGetGroups = {

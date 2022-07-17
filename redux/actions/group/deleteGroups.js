@@ -6,7 +6,7 @@ export const initStateDeleteGroups = {
 };
 
 export const deleteGroups = createAsyncThunk('user/deleteGroups', async (data) => {
-  return axios.post(`${process.env.SERVER_URL}/groups`, data);
+  return axios.post(`${window.location.origin + '/api'}/groups`, data);
 });
 
 export const reducerDeleteGroups = {

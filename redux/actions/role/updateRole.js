@@ -6,7 +6,7 @@ export const initStateUpdateRole = {
 };
 
 export const updateRole = createAsyncThunk('role/updateRole', async (data) => {
-  return axios.patch(`${process.env.SERVER_URL}/role`, data);
+  return axios.patch(`${window.location.origin + '/api'}/role`, data);
 });
 
 export const reducerUpdateRole = {

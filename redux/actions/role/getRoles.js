@@ -11,7 +11,7 @@ export const getRoles = createAsyncThunk('role/getRoles', async (data = {}, { ge
       getRoles: { offset, page },
     },
   } = getState();
-  return axios.get(`${process.env.SERVER_URL}/roles/`, { params: { offset, page, ...data } });
+  return axios.get(`${window.location.origin + '/api'}/roles/`, { params: { offset, page, ...data } });
 });
 
 export const reducerGetRoles = {

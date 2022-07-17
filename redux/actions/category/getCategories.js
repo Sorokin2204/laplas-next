@@ -6,7 +6,7 @@ export const initStateGetCategories = {
 };
 
 export const getCategories = createAsyncThunk('category/getCategories', async (data = {}, { getState }) => {
-  return axios.get(`${process.env.SERVER_URL}/categories/`);
+  return axios.get(`${window.location.origin + '/api'}/categories/`);
 });
 
 export const reducerGetCategories = {

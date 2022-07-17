@@ -6,7 +6,7 @@ export const initStateGetGroup = {
 };
 
 export const getGroup = createAsyncThunk('user/getGroup', async (groupId) => {
-  return axios.get(`${process.env.SERVER_URL}/group`, { params: { groupId: groupId } });
+  return axios.get(`${window.location.origin + '/api'}/group`, { params: { groupId: groupId } });
 });
 
 export const reducerGetGroup = {

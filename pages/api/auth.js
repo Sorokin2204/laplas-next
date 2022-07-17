@@ -1,15 +1,15 @@
-import { PrismaClient } from '@prisma/client';
+import { prisma } from '@prisma/client';
 import requestIp from 'request-ip'; // Get Local IP
 
 import { v4 as uuidv4 } from 'uuid';
-import { prismaClient } from '..';
+import { prisma } from '..';
 import bcrypt from 'bcrypt';
 async function handle(req, res) {
   if (req.method === 'POST') {
     //= get ip and host
     const detectedIp = requestIp.getClientIp(req);
     const host = req.headers.host.split('.')[0];
-    const domains = await prismaClient.SYS_DOMAINS.findFirst({
+    const domains = await prisma.SYS_DOMAINS.findFirst({
       where: { AND: [{ S_DOMAIN_CODE: host }, { C_ACTIVE: true }] },
     });
     console.log(host);
@@ -18,7 +18,7 @@ async function handle(req, res) {
     const pgPassword = domains.S_DB_PASSWORD;
     console.log('pgName ', pgName);
 
-    const prisma = new PrismaClient({
+    const prisma = new prisma({
       datasources: {
         db: {
           url: 'postgresql://' + pgName + ':' + pgPassword + '@172.17.0.1:5432/main?schema=public',
@@ -32,7 +32,7 @@ async function handle(req, res) {
         console.log('gen hash', hash);
       });
 
-      const findEmail = await prismaClient.USR_USERS.findMany({
+      const findEmail = await prisma.USR_USERS.findMany({
         where: { AND: [{ S_EMAIL: email }, { C_ACTIVE: true }, { U_DOMAIN_ID: domainId }] },
       });
       if (findEmail?.length === 0) {
@@ -43,24 +43,24 @@ async function handle(req, res) {
       if (!match) {
         throw new Error('mATCH');
       }
-      const role = await prismaClient.REG_ROLES.findMany({
+      const role = await prisma.REG_ROLES.findMany({
         where: { AND: [{ U_ROLE__ID: findEmail[0]?.U_ROLE_ID }, { C_ACTIVE: true }] },
       });
       console.log(role);
       let firmsList = [];
-      const firms = await prismaClient.USR_USER_FIRMS.findMany({
+      const firms = await prisma.USR_USER_FIRMS.findMany({
         where: { AND: [{ U_USER_ID: findEmail[0]?.U_USER_ID }, { U_DOMAIN_ID: domainId }] },
       });
 
       for (let firm of firms) {
         firmsList.push(
-          await prismaClient.USR_FIRMS.findMany({
+          await prisma.USR_FIRMS.findMany({
             where: { AND: [{ U_FIRM_ID: firm?.U_USER_FIRM_ID }, { C_ACTIVE: true }] },
           }),
         );
       }
       const now = new Date();
-      const newSession = await prismaClient.USR_USER_SESSIONS.create({
+      const newSession = await prisma.USR_USER_SESSIONS.create({
         data: {
           U_DOMAIN_ID: domainId,
           U_USER_ID: findEmail[0].U_USER_ID,

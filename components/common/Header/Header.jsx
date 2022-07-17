@@ -109,7 +109,7 @@ const Header = () => {
           onClick={async () => {
             try {
               setLoading(true);
-              await axios.post(`${process.env.SERVER_URL}/exit-session`, { sessionId: session.user.sessionId });
+              await axios.post(`${window.location.origin + '/api'}/exit-session`, { sessionId: session.user.sessionId });
             } catch (error) {
             } finally {
               setLoading(false);

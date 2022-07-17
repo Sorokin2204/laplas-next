@@ -6,7 +6,7 @@ export const initStateCreateSection = {
 };
 
 export const createSection = createAsyncThunk('section/createSection', async (data) => {
-  return axios.post(`${process.env.SERVER_URL}/section`, data);
+  return axios.post(`${window.location.origin + '/api'}/section`, data);
 });
 
 export const reducerCreateSection = {

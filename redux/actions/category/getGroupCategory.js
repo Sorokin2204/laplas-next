@@ -6,7 +6,7 @@ export const initStateGetGroupCategory = {
 };
 
 export const getGroupCategory = createAsyncThunk('category/getGroupCategory', async (data, { getState }) => {
-  return axios.get(`${process.env.SERVER_URL}/category-group/`, {
+  return axios.get(`${window.location.origin + '/api'}/category-group/`, {
     params: {
       catId: data,
     },

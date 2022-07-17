@@ -6,7 +6,7 @@ export const initStateUpdateSection = {
 };
 
 export const updateSection = createAsyncThunk('section/updateSection', async (data) => {
-  return axios.patch(`${process.env.SERVER_URL}/section`, data);
+  return axios.patch(`${window.location.origin + '/api'}/section`, data);
 });
 
 export const reducerUpdateSection = {

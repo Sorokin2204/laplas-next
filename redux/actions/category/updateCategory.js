@@ -6,7 +6,7 @@ export const initStateUpdateCategory = {
 };
 
 export const updateCategory = createAsyncThunk('category/updateCategory', async (data) => {
-  return axios.patch(`${process.env.SERVER_URL}/category`, data);
+  return axios.patch(`${window.location.origin + '/api'}/category`, data);
 });
 
 export const reducerUpdateCategory = {

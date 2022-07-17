@@ -11,7 +11,7 @@ export const getFirms = createAsyncThunk('user/getFirms', async (data = {}, { ge
       getUsers: { offset, page },
     },
   } = getState();
-  return axios.get(`${process.env.SERVER_URL}/firms/`, { params: { offset, page, ...data } });
+  return axios.get(`${window.location.origin + '/api'}/firms/`, { params: { offset, page, ...data } });
 });
 
 export const reducerGetFirms = {

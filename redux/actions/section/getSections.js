@@ -12,7 +12,7 @@ export const getSections = createAsyncThunk('role/getSections', async (data = {}
         getSections: { offset, page },
       },
     } = getState();
-    return axios.get(`${process.env.SERVER_URL}/sections/`, { params: { offset, page, ...data } });
+    return axios.get(`${window.location.origin + '/api'}/sections/`, { params: { offset, page, ...data } });
   } catch (error) {
     console.log(error);
     return rejectWithValue(error);

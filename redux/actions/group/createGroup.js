@@ -6,7 +6,7 @@ export const initStateCreateGroup = {
 };
 
 export const createGroup = createAsyncThunk('group/createGroup', async (data) => {
-  return axios.post(`${process.env.SERVER_URL}/group`, data);
+  return axios.post(`${window.location.origin + '/api'}/group`, data);
 });
 
 export const reducerCreateGroup = {

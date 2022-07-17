@@ -6,7 +6,7 @@ export const initStateUpdateUser = {
 };
 
 export const updateUser = createAsyncThunk('user/updateUser', async (data) => {
-  return axios.patch(`${process.env.SERVER_URL}/user`, data);
+  return axios.patch(`${window.location.origin + '/api'}/user`, data);
 });
 
 export const reducerUpdateUser = {

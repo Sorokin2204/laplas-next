@@ -6,7 +6,7 @@ export const initStateGetSection = {
 };
 
 export const getSection = createAsyncThunk('user/getSection', async (sectionId) => {
-  return axios.get(`${process.env.SERVER_URL}/section`, { params: { sectionId: sectionId } });
+  return axios.get(`${window.location.origin + '/api'}/section`, { params: { sectionId: sectionId } });
 });
 
 export const reducerGetSection = {

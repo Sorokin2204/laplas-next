@@ -6,7 +6,7 @@ export const initStateUpdateFirm = {
 };
 
 export const updateFirm = createAsyncThunk('firm/updateFirm', async (data) => {
-  return axios.patch(`${process.env.SERVER_URL}/firm`, data);
+  return axios.patch(`${window.location.origin + '/api'}/firm`, data);
 });
 
 export const reducerUpdateFirm = {
