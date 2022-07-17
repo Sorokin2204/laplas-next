@@ -18,16 +18,20 @@ function MyApp({ Component, pageProps: { session, ...pageProps } }) {
   const router = useRouter();
   return (
     <Provider store={store}>
-      {router.pathname === '/login' ? (
-        <SessionProvider session={session}>
-          <Component {...pageProps} />
-        </SessionProvider>
-      ) : (
-        <SessionProvider session={session}>
-          <MainLayout>
+      {router.pathname.startsWith('/admin') || router.pathname.startsWith('/login') ? (
+        router.pathname === '/login' ? (
+          <SessionProvider session={session}>
             <Component {...pageProps} />
-          </MainLayout>
-        </SessionProvider>
+          </SessionProvider>
+        ) : (
+          <SessionProvider session={session}>
+            <MainLayout>
+              <Component {...pageProps} />
+            </MainLayout>
+          </SessionProvider>
+        )
+      ) : (
+        <Component {...pageProps} />
       )}
     </Provider>
   );

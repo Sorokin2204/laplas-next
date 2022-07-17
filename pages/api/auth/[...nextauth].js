@@ -1,7 +1,6 @@
 import axios from 'axios';
 import NextAuth from 'next-auth';
 import CredentialProvider from 'next-auth/providers/credentials';
-
 export default NextAuth({
   providers: [
     CredentialProvider({
@@ -12,9 +11,12 @@ export default NextAuth({
       },
       async authorize(credentials, req) {
         try {
-          const response = await axios.post(`${process.env.SERVER_URL}/auth`, { email: credentials.email, password: credentials.password });
+          // const host = req.headers.host.split('.')[0];
+          // console.log('HOSTTT', req.headers.host);
+          const response = await axios.post(`${req.headers.origin}/api/auth`, { email: credentials.email, password: credentials.password });
           return response.data;
         } catch (error) {
+          console.log(error);
           //   return null;
           if (error?.response?.status === 401) {
             throw new Error('Неверный пароль или email');
