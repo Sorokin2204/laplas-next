@@ -1,24 +1,29 @@
-import { prisma } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import requestIp from 'request-ip'; // Get Local IP
 
 import { v4 as uuidv4 } from 'uuid';
-import { prisma } from '..';
-import bcrypt from 'bcrypt';
+// import { prismaClient } from '..';
+import bcrypt from 'bcrypt';	
+
 async function handle(req, res) {
   if (req.method === 'POST') {
     //= get ip and host
+	let prisma = new PrismaClient()
+
     const detectedIp = requestIp.getClientIp(req);
     const host = req.headers.host.split('.')[0];
+	console.log(host)
+	
     const domains = await prisma.SYS_DOMAINS.findFirst({
       where: { AND: [{ S_DOMAIN_CODE: host }, { C_ACTIVE: true }] },
     });
-    console.log(host);
+
     const domainId = domains.U_DOMAIN_ID;
     const pgName = domains.S_DB_USERNAME;
     const pgPassword = domains.S_DB_PASSWORD;
-    console.log('pgName ', pgName);
+    console.log('pgName ', pgName," domainId ",domainId);
 
-    const prisma = new prisma({
+     prisma = new PrismaClient({
       datasources: {
         db: {
           url: 'postgresql://' + pgName + ':' + pgPassword + '@172.17.0.1:5432/main?schema=public',
@@ -28,9 +33,9 @@ async function handle(req, res) {
 
     try {
       const { email, password } = req.body;
-      bcrypt.hash(password, 10, function (err, hash) {
+     /*  bcrypt.hash(password, 10, function (err, hash) {
         console.log('gen hash', hash);
-      });
+      }); */
 
       const findEmail = await prisma.USR_USERS.findMany({
         where: { AND: [{ S_EMAIL: email }, { C_ACTIVE: true }, { U_DOMAIN_ID: domainId }] },
@@ -87,7 +92,7 @@ async function handle(req, res) {
         sessionId: newSession?.U_SESSION_ID,
       });
     } catch (error) {
-      console.log(error);
+      // console.log(error);
       res.status(401).json({ error: true });
     }
   }

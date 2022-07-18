@@ -11,13 +11,16 @@ export default NextAuth({
         email: { label: 'Email', type: 'text', placeholder: 'jsmith' },
         password: { label: 'Password', type: 'password' },
       },
-      async authorize(credentials, req) {
+      async authorize(credentials, req) { 
+	     
         try {
           const { origin } = absoluteUrl(req);
-          const response = await axios.post(`${origin}/api/auth`, { email: credentials.email, password: credentials.password });
+		  const originAuth=origin.replace('https','http')+'/api/auth'
+          console.log('origin', originAuth);
+          const response = await axios.post(originAuth, { email: credentials.email, password: credentials.password });
           return response.data;
         } catch (error) {
-          console.log(error);
+          // console.log(error);
           //   return null;
           if (error?.response?.status === 401) {
             throw new Error('Неверный пароль или email');
