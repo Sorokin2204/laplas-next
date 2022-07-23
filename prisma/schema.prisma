@@ -52,8 +52,12 @@ model REG_LOCALES {
 model REG_LOCALE_VALUES {
   U_LOCALE_VALUE_ID String @id  @db.Uuid @default(uuid())
   U_LOCALE_ID String? @db.Uuid @default(uuid())
-  U_LOCALE_TYPE_ID String? @db.Uuid @default(uuid())
   S_LOCALE_VALUE    String?  @db.VarChar(255)
+  S_LOCALE_ENTITY_TYPE    String?
+  S_LOCALE_ENTITY_CODE    String? 
+  S_LOCALE_ENTITY_KEY    String? 
+  C_ACTIVE  Boolean?
+
 }
 model REG_CATEGORY_PARAM_TYPES {
   U_PARAM_TYPE_ID String @id  @db.Uuid @default(uuid())
