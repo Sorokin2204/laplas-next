@@ -30,12 +30,14 @@ async function handle(req, res) {
         },
       },
     });
-
-    try {
-      const { email, password } = req.body;
-     /*  bcrypt.hash(password, 10, function (err, hash) {
+	
+	const { email, password } = req.body;
+     
+	 bcrypt.hash(password, 10, function (err, hash) {
         console.log('gen hash', hash);
-      }); */
+      });
+   // try {
+     
 
       const findEmail = await prisma.USR_USERS.findMany({
         where: { AND: [{ S_EMAIL: email }, { C_ACTIVE: true }, { U_DOMAIN_ID: domainId }] },
@@ -43,11 +45,13 @@ async function handle(req, res) {
       if (findEmail?.length === 0) {
         throw new Error('NOt found');
       }
-
+	
       const match = await bcrypt.compare(password, findEmail[0].S_PASSWORD_HASH);
       if (!match) {
         throw new Error('mATCH');
       }
+	  console.log(findEmail)
+	  
       const role = await prisma.REG_ROLES.findMany({
         where: { AND: [{ U_ROLE__ID: findEmail[0]?.U_ROLE_ID }, { C_ACTIVE: true }] },
       });
@@ -91,10 +95,10 @@ async function handle(req, res) {
         domain: domainId,
         sessionId: newSession?.U_SESSION_ID,
       });
-    } catch (error) {
+   /*  } catch (error) {
       // console.log(error);
       res.status(401).json({ error: true });
-    }
+    } */
   }
 }
 

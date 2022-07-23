@@ -48,11 +48,7 @@ model REG_LOCALES {
   S_LOCALE_CODE    String?  @db.VarChar(255)
   C_ACTIVE  Boolean?
 }
-model REG_LOCALE_TYPES {
-  U_LOCALE_TYPE_ID String @id  @db.Uuid @default(uuid())
-  S_LOCALE_ENTITY_TYPE    String?  @db.VarChar(255)
-  S_LOCALE_ENTITY_KEY    String?  @db.VarChar(255)
-}
+
 model REG_LOCALE_VALUES {
   U_LOCALE_VALUE_ID String @id  @db.Uuid @default(uuid())
   U_LOCALE_ID String? @db.Uuid @default(uuid())
